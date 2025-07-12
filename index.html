@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Portofolio - Haerul Yuda Aditiya</title>
+		<link
+			rel="icon"
+			href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%233d405b'/%3E%3Cpath d='M 35 25 L 15 50 L 35 75' stroke='%23ffffff' stroke-width='10' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M 65 25 L 85 50 L 65 75' stroke='%23ffffff' stroke-width='10' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+		<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+		<style>
+			body {
+				font-family: "Inter", sans-serif;
+				background-color: #f8f7f4;
+				color: #3d405b;
+			}
+
+			.social-button {
+				display: inline-flex;
+				align-items: center;
+				padding: 0.5rem 1rem;
+				border-radius: 0.5rem;
+				text-decoration: none;
+				color: white;
+				transition: transform 0.2s;
+				font-size: 0.875rem;
+			}
+
+			.social-button:hover {
+				transform: translateY(-2px);
+			}
+
+			.linkedin {
+				background-color: #0077b5;
+			}
+
+			.github {
+				background-color: #333;
+			}
+
+			.gmail {
+				background-color: #d44638;
+			}
+
+			.instagram {
+				background-color: #e1306c;
+			}
+
+			.youtube {
+				background-color: #ff0000;
+			}
+
+			.tab-button {
+				padding: 0.5rem 1rem;
+				border-radius: 0.5rem;
+				border: 2px solid transparent;
+				font-weight: 500;
+				transition: all 0.3s;
+			}
+
+			.tab-button.active {
+				border-color: #81b29a;
+				color: #81b29a;
+				background-color: #eaf6f0;
+			}
+
+			.tab-content {
+				display: none;
+			}
+
+			.tab-content.active {
+				display: block;
+				animation: fadeIn 0.5s;
+			}
+
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+				}
+
+				to {
+					opacity: 1;
+				}
+			}
+
+			.project-item {
+				background-color: #fff;
+				padding: 1rem;
+				border-radius: 0.5rem;
+				margin-bottom: 1rem;
+				border: 1px solid #e5e7eb;
+			}
+
+			.project-title {
+				font-weight: 700;
+				color: #3d405b;
+			}
+
+			.project-description {
+				color: #6b7280;
+			}
+
+			.timeline-container {
+				width: 100%;
+				position: relative;
+			}
+
+			.timeline-container::after {
+				content: "";
+				position: absolute;
+				width: 4px;
+				background-color: #e5e7eb;
+				top: 0;
+				bottom: 0;
+				left: 50%;
+				margin-left: -2px;
+			}
+
+			.timeline-item-container {
+				padding: 10px 40px;
+				position: relative;
+				background-color: inherit;
+				width: 50%;
+			}
+
+			.timeline-item-container.left {
+				left: 0;
+			}
+
+			.timeline-item-container.right {
+				left: 50%;
+			}
+
+			.timeline-item-container::after {
+				content: "";
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				right: -12px;
+				background-color: white;
+				border: 4px solid #3d405b;
+				top: 15px;
+				border-radius: 50%;
+				z-index: 1;
+			}
+
+			.timeline-item-container.right::after {
+				left: -8px;
+			}
+
+			.timeline-content {
+				padding: 20px;
+				background-color: white;
+				position: relative;
+				border-radius: 6px;
+				border: 1px solid #e5e7eb;
+				cursor: pointer;
+			}
+
+			.timeline-details {
+				max-height: 0;
+				opacity: 0;
+				overflow: hidden;
+				transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+			}
+
+			.timeline-content.active .timeline-details {
+				max-height: 500px;
+				opacity: 1;
+			}
+
+			@media screen and (max-width: 768px) {
+				.timeline-container::after {
+					left: 15px;
+				}
+
+				.timeline-item-container {
+					width: 100%;
+					padding-left: 50px;
+					padding-right: 15px;
+				}
+
+				.timeline-item-container.right {
+					left: 0%;
+				}
+
+				.timeline-item-container.left::after,
+				.timeline-item-container.right::after {
+					left: -8px;
+				}
+			}
+
+			.chart-container {
+				position: relative;
+				width: 100%;
+				max-width: 900px;
+				margin-left: auto;
+				margin-right: auto;
+				height: 400px;
+				max-height: 50vh;
+			}
+
+			@media (max-width: 768px) {
+				.chart-container {
+					height: 500px;
+					max-height: 70vh;
+				}
+			}
+
+			/* Professional PDF Template Styles */
+			.pdf-pro-container {
+				position: absolute;
+				left: -9999px;
+				/* top: 10mm; */
+				width: 210mm;
+				background-color: white;
+				font-family: "Roboto", sans-serif;
+			}
+
+			.pdf-pro-page {
+				padding: 10mm;
+				/* Equal margin: 10mm on all sides */
+				width: 100%;
+				min-height: calc(297mm - 20mm);
+				box-sizing: border-box;
+				color: #333;
+			}
+
+			.pdf-pro-header {
+				text-align: center;
+				margin-bottom: 7mm;
+			}
+
+			.pdf-pro-header h1 {
+				font-size: 26pt;
+				font-weight: 700;
+				color: #2c3e50;
+				margin: 0;
+			}
+
+			.pdf-pro-header h2 {
+				font-size: 11pt;
+				font-weight: 500;
+				color: #34495e;
+				margin: 1mm 0;
+				letter-spacing: 1px;
+			}
+
+			.pdf-pro-contact {
+				display: flex;
+				justify-content: center;
+				flex-wrap: wrap;
+				gap: 12px;
+				margin-top: 4mm;
+				font-size: 9pt;
+				color: #555;
+			}
+
+			.pdf-pro-contact span {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+			}
+
+			.pdf-pro-section-title {
+				font-size: 13pt;
+				font-weight: 700;
+				color: #2c3e50;
+				margin-top: 5mm;
+				margin-bottom: 3mm;
+				border-bottom: 1.5px solid #bdc3c7;
+				padding-bottom: 1.5mm;
+			}
+
+			.pdf-pro-profile-text {
+				font-size: 10pt;
+				line-height: 1.5;
+				text-align: justify;
+			}
+
+			.pdf-pro-grid {
+				display: grid;
+				grid-template-columns: 1fr 2.5fr;
+				gap: 8mm;
+				align-items: start;
+			}
+
+			.pdf-pro-grid-title {
+				font-weight: 700;
+				font-size: 10pt;
+				color: #34495e;
+			}
+
+			.pdf-pro-grid-content {
+				font-size: 10pt;
+			}
+
+			.pdf-pro-work-item {
+				margin-bottom: 5mm;
+				page-break-inside: avoid;
+			}
+
+			/* Avoid page break */
+			.pdf-pro-work-item:last-child {
+				margin-bottom: 0;
+			}
+
+			.pdf-pro-work-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+			}
+
+			.pdf-pro-work-role {
+				font-size: 11pt;
+				font-weight: 700;
+			}
+
+			.pdf-pro-work-date {
+				font-size: 9pt;
+				color: #777;
+				font-weight: 500;
+			}
+
+			.pdf-pro-work-company {
+				font-size: 10pt;
+				font-weight: 500;
+				color: #555;
+				margin-bottom: 2mm;
+			}
+
+			.pdf-pro-work-details {
+				font-size: 9.5pt;
+				padding-left: 15px;
+				margin: 0;
+				list-style-type: disc;
+			}
+
+			/* Added list-style-type */
+			.pdf-pro-work-details li {
+				margin-bottom: 1.2mm;
+			}
+
+			.pdf-pro-sub-skill {
+				font-size: 9.5pt;
+				margin-top: 2mm;
+			}
+
+			.pdf-pro-sub-skill strong {
+				font-weight: 700;
+			}
+
+			.pdf-pro-project-item {
+				margin-bottom: 4mm;
+				page-break-inside: avoid;
+			}
+
+			/* Avoid page break */
+			.pdf-pro-project-title {
+				font-size: 10pt;
+				font-weight: 700;
+			}
+
+			.pdf-pro-project-context {
+				font-size: 9pt;
+				color: #555;
+				font-style: italic;
+				margin-bottom: 2mm;
+			}
+
+			.pdf-pro-project-details {
+				font-size: 9.5pt;
+				padding-left: 15px;
+				margin: 5;
+			}
+
+			.tech-tag {
+				background-color: #f3f4f6; /* bg-gray-100 */
+				color: #3d405b;
+				padding: 0.25rem 0.75rem;
+				border-radius: 9999px; /* rounded-full */
+				font-size: 0.875rem; /* text-sm */
+				font-weight: 500;
+			}
+
+			.skill-item {
+				padding: 1rem;
+				background-color: white;
+				border-radius: 0.75rem;
+				box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
+			}
+			.skill-item:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+			}
+			.skill-pill {
+				background-color: white;
+				color: #374151; /* text-gray-700 */
+				padding: 0.5rem 1rem;
+				border-radius: 9999px; /* rounded-full */
+				font-weight: 500;
+				box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+				font-size: 0.875rem; /* text-sm */
+			}
+		</style>
+	</head>
+
+	<body class="antialiased">
+		<header id="header" class="bg-white sticky top-0 z-50 shadow-sm">
+			<div class="container mx-auto px-6 py-4">
+				<nav class="flex items-center justify-between">
+					<a href="#hero" class="text-lg md:text-xl font-bold text-[#3d405b]">Haerul Yuda Aditiya</a>
+					<div class="hidden md:flex items-center space-x-4 lg:space-x-8">
+						<a href="#skills" class="text-gray-600 hover:text-[#3d405b] transition-colors text-base lg:text-lg">Keahlian</a>
+						<a href="#projects" class="text-gray-600 hover:text-[#3d405b] transition-colors text-base lg:text-lg">Projek</a>
+						<a href="#experience" class="text-gray-600 hover:text-[#3d405b] transition-colors text-base lg:text-lg">Pengalaman</a>
+						<a href="#certificates" class="text-gray-600 hover:text-[#3d405b] transition-colors text-base lg:text-lg">Sertifikat</a>
+					</div>
+
+					<button
+						onclick="generateCV()"
+						class="hidden md:inline-flex items-center bg-[#3d405b] text-white px-3 py-2 md:px-4 md:py-2 rounded-lg hover:bg-opacity-90 transition-all text-sm md:text-base">
+						<i class="fas fa-file-pdf mr-2"></i> <span class="hidden sm:inline">Unduh CV</span>
+					</button>
+
+					<button id="menuBtn" class="md:hidden text-[#3d405b] focus:outline-none">
+						<i class="fas fa-bars text-2xl"></i>
+					</button>
+				</nav>
+			</div>
+
+			<div id="mobileMenu" class="hidden md:hidden fixed inset-0 bg-black bg-opacity-50 z-40" aria-hidden="true"></div>
+
+			<div
+				id="mobileMenuContent"
+				class="hidden md:hidden fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-50 p-6 transform translate-x-full transition-transform duration-300 ease-in-out">
+				<button id="closeMenuBtn" class="absolute top-6 right-6 text-[#3d405b]">
+					<i class="fas fa-times text-2xl"></i>
+				</button>
+
+				<div class="flex flex-col space-y-6 mt-12">
+					<a href="#skills" class="mobile-link text-lg text-gray-600 hover:text-[#3d405b] transition-colors">Keahlian</a>
+					<a href="#projects" class="mobile-link text-lg text-gray-600 hover:text-[#3d405b] transition-colors">Projek</a>
+					<a href="#experience" class="mobile-link text-lg text-gray-600 hover:text-[#3d405b] transition-colors">Pengalaman</a>
+					<a href="#certificates" class="text-gray-600 hover:text-[#3d405b] transition-colors text-base lg:text-lg">Sertifikat</a>
+
+					<button
+						onclick="generateCV()"
+						class="mt-4 inline-flex items-center justify-center bg-[#3d405b] text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all">
+						<i class="fas fa-file-pdf mr-2"></i> Unduh CV
+					</button>
+				</div>
+			</div>
+
+			<script>
+				// Fungsi untuk menu mobile
+				const menuBtn = document.getElementById("menuBtn");
+				const closeMenuBtn = document.getElementById("closeMenuBtn");
+				const mobileMenu = document.getElementById("mobileMenu");
+				const mobileMenuContent = document.getElementById("mobileMenuContent");
+
+				const openMenu = () => {
+					mobileMenu.classList.remove("hidden");
+					mobileMenuContent.classList.remove("hidden");
+					document.body.style.overflow = "hidden";
+
+					// Trigger reflow untuk transisi
+					mobileMenuContent.offsetWidth;
+					mobileMenuContent.classList.remove("translate-x-full");
+				};
+
+				const closeMenu = () => {
+					mobileMenuContent.classList.add("translate-x-full");
+
+					setTimeout(() => {
+						mobileMenu.classList.add("hidden");
+						mobileMenuContent.classList.add("hidden");
+						document.body.style.overflow = "auto";
+					}, 300); // Sesuaikan dengan durasi transisi
+				};
+
+				menuBtn.addEventListener("click", openMenu);
+				closeMenuBtn.addEventListener("click", closeMenu);
+				mobileMenu.addEventListener("click", closeMenu); // Menutup jika klik di luar area menu
+
+				// Menutup menu saat link diklik
+				const mobileLinks = document.querySelectorAll(".mobile-link");
+
+				mobileLinks.forEach((link) => {
+					link.addEventListener("click", closeMenu);
+				});
+			</script>
+		</header>
+
+		<main id="main-content">
+			<section id="hero" class="bg-gray-50">
+				<div class="container mx-auto px-6 py-16 md:py-24">
+					<div class="grid md:grid-cols-2 gap-12 items-center">
+						<div class="text-center md:text-left">
+							<h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">Haerul Yuda Aditiya</h1>
+							<p class="mt-4 text-lg md:text-xl text-[#3d405b] font-medium">Pengembang Web & Mobile</p>
+							<p class="mt-2 text-gray-600">Spesialisasi membangun aplikasi web dengan Laravel dan aplikasi mobile cross-platform dengan Ionic.</p>
+
+							<div class="mt-6 flex justify-center md:justify-start">
+								<div class="flex items-start text-left">
+									<div class="flex-shrink-0 pt-1">
+										<svg class="w-6 h-6 text-[#3d405b]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+											<path d="M12 3L1 9l5.5 3.18V18h11v-5.82L23 9l-11-6zm-6.5 7.43L12 14.5l6.5-4.07L12 6.36 5.5 10.43zM18 16h-5v-1.5h5V16z" />
+										</svg>
+									</div>
+									<div class="ml-4">
+										<p class="font-semibold text-gray-800">Universitas Buana Perjuangan Karawang</p>
+										<p class="text-sm text-gray-600">S1 Teknik Informatika | IPK: <span class="font-bold text-[#3d405b]">3.78</span></p>
+									</div>
+								</div>
+							</div>
+
+							<div class="mt-8 flex justify-center md:justify-start flex-wrap gap-4">
+								<a
+									href="https://linkedin.com/in/haerul-yuda-aditiya"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="px-5 py-3 bg-[#0077B5] text-white font-semibold rounded-lg shadow-md hover:bg-[#005582] transition-colors duration-300 flex items-center">
+									<i class="fab fa-linkedin-in mr-2"></i> LinkedIn
+								</a>
+								<a
+									href="https://github.com/haerulyudaaditiya"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="px-5 py-3 bg-[#333] text-white font-semibold rounded-lg shadow-md hover:bg-[#111] transition-colors duration-300 flex items-center">
+									<i class="fab fa-github mr-2"></i> GitHub
+								</a>
+								<a
+									href="https://wa.me/628816147969"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="px-5 py-3 bg-[#25D366] text-white font-semibold rounded-lg shadow-md hover:bg-[#128C7E] transition-colors duration-300 flex items-center">
+									<i class="fab fa-whatsapp mr-2"></i> WhatsApp
+								</a>
+								<a
+									href="mailto:haerulyudaaditiya@gmail.com"
+									class="px-5 py-3 bg-gray-600 text-white font-semibold rounded-lg shadow-md hover:bg-gray-700 transition-colors duration-300 flex items-center">
+									<i class="far fa-envelope mr-2"></i> Email
+								</a>
+							</div>
+						</div>
+
+						<div class="flex justify-center">
+							<div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl">
+								<img src="formal.jpg" alt="Haerul Yuda Aditiya" class="w-full h-full object-cover" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="skills" class="py-16 md:py-24">
+				<div class="container mx-auto px-6">
+					<div class="text-center mb-12">
+						<h2 class="text-4xl font-bold text-gray-800">Keahlian & Teknologi</h2>
+						<p class="text-gray-600 mt-2">Teknologi yang saya gunakan untuk membangun aplikasi web dan mobile.</p>
+					</div>
+
+					<div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6 text-center">
+						<div class="skill-item">
+							<img
+								src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg"
+								alt="Laravel"
+								class="h-12 w-12 mx-auto" />
+							<p class="mt-2 text-sm font-medium">Laravel</p>
+						</div>
+						<div class="skill-item">
+							<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-plain.svg" alt="PHP" class="h-12 w-12 mx-auto" />
+							<p class="mt-2 text-sm font-medium">PHP</p>
+						</div>
+						<div class="skill-item">
+							<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain.svg" alt="HTML5" class="h-12 w-12 mx-auto" />
+							<p class="mt-2 text-sm font-medium">HTML5</p>
+						</div>
+						<div class="skill-item">
+							<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain.svg" alt="CSS3" class="h-12 w-12 mx-auto" />
+							<p class="mt-2 text-sm font-medium">CSS3</p>
+						</div>
+						<div class="skill-item">
+							<img
+								src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-plain.svg"
+								alt="JavaScript"
+								class="h-12 w-12 mx-auto" />
+							<p class="mt-2 text-sm font-medium">JavaScript</p>
+						</div>
+						<div class="skill-item">
+							<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-plain.svg" alt="Bootstrap" class="h-12 w-12 mx-auto" />
+							<p class="mt-2 text-sm font-medium">Bootstrap</p>
+						</div>
+						<div class="skill-item">
+							<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg" alt="MySQL" class="h-12 w-12 mx-auto" />
+							<p class="mt-2 text-sm font-medium">MySQL</p>
+						</div>
+						<div class="skill-item">
+							<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" class="h-12 w-12 mx-auto" />
+							<p class="mt-2 text-sm font-medium">GitHub</p>
+						</div>
+						<div class="skill-item">
+							<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ionic/ionic-original.svg" alt="Ionic" class="h-12 w-12 mx-auto" />
+							<p class="mt-2 text-sm font-medium">Ionic</p>
+						</div>
+						<div class="skill-item">
+							<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-plain.svg" alt="Angular" class="h-12 w-12 mx-auto" />
+							<p class="mt-2 text-sm font-medium">Angular</p>
+						</div>
+						<div class="skill-item">
+							<img
+								src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-plain.svg"
+								alt="TypeScript"
+								class="h-12 w-12 mx-auto" />
+							<p class="mt-2 text-sm font-medium">TypeScript</p>
+						</div>
+					</div>
+
+					<div class="mt-16 text-center">
+						<h3 class="text-2xl font-bold text-gray-800 mb-6">Keterampilan Profesional & Konseptual</h3>
+						<div class="flex flex-wrap justify-center gap-3">
+							<span class="skill-pill">Arsitektur MVC</span>
+							<span class="skill-pill">RESTful API</span>
+							<span class="skill-pill">Eloquent ORM</span>
+							<span class="skill-pill">Problem Solving</span>
+							<span class="skill-pill">Kolaborasi Tim</span>
+							<span class="skill-pill">Manajemen Waktu</span>
+							<span class="skill-pill">Terorganisir</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="projects" class="py-16 md:py-24 bg-gray-50">
+				<div class="container mx-auto px-6">
+					<div class="text-center mb-16">
+						<h2 class="text-4xl font-bold text-gray-800">Projek Saya</h2>
+						<p class="text-gray-600 mt-2">Berikut adalah beberapa projek yang pernah saya kerjakan.</p>
+					</div>
+
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+						<div class="bg-white rounded-xl shadow-lg overflow-hidden group">
+							<div class="relative overflow-hidden">
+								<img src="dashboard.jpeg" alt="Projek SIPENA" class="w-full h-64 object-cover" />
+
+								<div
+									class="absolute inset-0 bg-[#3d405b] bg-opacity-95 p-4 flex items-center justify-center transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
+									<div class="text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out delay-200">
+										<p class="text-sm text-white mb-4">
+											Merancang sistem informasi pengelolaan karyawan full-stack dengan aplikasi mobile (Ionic/Angular) untuk presensi berbasis
+											geofencing dan panel admin web (Laravel).
+										</p>
+										<div class="flex flex-wrap justify-center gap-2">
+											<span class="text-xs font-medium bg-white/20 text-white px-3 py-1 rounded-full">Laravel</span>
+											<span class="text-xs font-medium bg-white/20 text-white px-3 py-1 rounded-full">Ionic/Angular</span>
+											<span class="text-xs font-medium bg-white/20 text-white px-3 py-1 rounded-full">Full-Stack</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="p-5 text-center border-t border-gray-100">
+								<h3 class="text-lg font-semibold text-gray-900">Pengembang Aplikasi SIPENA</h3>
+							</div>
+						</div>
+
+						<div class="bg-white rounded-xl shadow-lg overflow-hidden group">
+							<div class="relative overflow-hidden">
+								<img src="test.png" alt="Projek Wejeatrans" class="w-full h-64 object-cover" />
+								<div
+									class="absolute inset-0 bg-[#3d405b] bg-opacity-95 p-4 flex items-center justify-center transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
+									<div class="text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out delay-200">
+										<p class="text-sm text-white mb-4">
+											Membuat website resmi sebagai platform pemesanan dan informasi sewa kendaraan, mengembangkan UI/UX, dan sistem pemesanan
+											otomatis.
+										</p>
+										<div class="flex flex-wrap justify-center gap-2">
+											<span class="text-xs font-medium bg-white/20 text-white px-3 py-1 rounded-full">PHP</span>
+											<span class="text-xs font-medium bg-white/20 text-white px-3 py-1 rounded-full">Laravel</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="p-5 text-center border-t border-gray-100">
+								<h3 class="text-lg font-semibold text-gray-900">Pengembang Website Wejeatrans</h3>
+							</div>
+						</div>
+						<div class="bg-white rounded-xl shadow-lg overflow-hidden group">
+							<div class="relative overflow-hidden">
+								<img src="test.png" alt="Projek Company Profile" class="w-full h-64 object-cover" />
+								<div
+									class="absolute inset-0 bg-[#3d405b] bg-opacity-95 p-4 flex items-center justify-center transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out">
+									<div class="text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out delay-200">
+										<p class="text-sm text-white mb-4">
+											Membuat website company profile untuk keperluan branding dan informasi perusahaan berbasis teknologi sebagai pekerjaan
+											freelance.
+										</p>
+										<div class="flex flex-wrap justify-center gap-2">
+											<span class="text-xs font-medium bg-white/20 text-white px-3 py-1 rounded-full">PHP</span>
+											<span class="text-xs font-medium bg-white/20 text-white px-3 py-1 rounded-full">Branding</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="p-5 text-center border-t border-gray-100">
+								<h3 class="text-lg font-semibold text-gray-900">Website Company Profile</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="experience" class="py-16 md:py-24">
+				<div class="container mx-auto px-6">
+					<div class="text-center mb-16">
+						<h2 class="text-3xl font-bold">Linimasa Karier & Pengalaman</h2>
+					</div>
+					<div id="timeline-container" class="timeline-container max-w-4xl mx-auto"></div>
+					<div class="mt-20">
+						<h3 class="text-2xl font-bold text-center mb-8">Visualisasi Durasi Pengalaman</h3>
+						<div class="chart-container">
+							<canvas id="experienceChart"></canvas>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="certificates" class="py-16 md:py-24 bg-white">
+				<div class="container mx-auto px-6">
+					<div class="text-center mb-12">
+						<h2 class="text-4xl font-bold text-gray-800">Sertifikat & Lisensi</h2>
+						<p class="text-gray-600 mt-2">Kredensial yang mendukung kualifikasi saya.</p>
+					</div>
+
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+						<div class="group bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl">
+							<div class="overflow-hidden">
+								<img
+									src="test.png"
+									alt="Sertifikat TOEIC"
+									class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" />
+							</div>
+							<div class="p-6 text-center">
+								<h3 class="text-xl font-bold text-gray-900">TOEIC Listening and Reading</h3>
+								<p class="text-sm text-gray-600 mt-1">ETS - Educational Testing Service</p>
+							</div>
+						</div>
+
+						<div class="group bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl">
+							<div class="overflow-hidden">
+								<img
+									src="test.png"
+									alt="Contoh Sertifikat"
+									class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" />
+							</div>
+							<div class="p-6 text-center">
+								<h3 class="text-xl font-bold text-gray-900">Nama Sertifikat Lain</h3>
+								<p class="text-sm text-gray-600 mt-1">Nama Penerbit</p>
+							</div>
+						</div>
+
+						<div class="group bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl">
+							<div class="overflow-hidden">
+								<img
+									src="test.png"
+									alt="Contoh Sertifikat"
+									class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" />
+							</div>
+							<div class="p-6 text-center">
+								<h3 class="text-xl font-bold text-gray-900">Nama Sertifikat Lain</h3>
+								<p class="text-sm text-gray-600 mt-1">Nama Penerbit</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer id="contact" class="bg-[#3d405b] text-white">
+			<div class="container mx-auto px-6 py-12 text-center">
+				<h2 class="text-3xl font-bold mb-3">Mari Terhubung</h2>
+				<p class="max-w-xl mx-auto mb-8 text-gray-300">Saya selalu terbuka untuk diskusi mengenai kolaborasi, proyek, atau peluang lainnya.</p>
+
+				<div class="flex justify-center flex-wrap gap-5 mb-10">
+					<a
+						href="https://linkedin.com/in/haerul-yuda-aditiya"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center text-lg">
+						<i class="fab fa-linkedin-in w-6"></i>
+						<span class="ml-2">LinkedIn</span>
+					</a>
+					<a
+						href="https://github.com/haerulyudaaditiya"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center text-lg">
+						<i class="fab fa-github w-6"></i>
+						<span class="ml-2">GitHub</span>
+					</a>
+					<a
+						href="mailto:haerulyudaaditiya@gmail.com"
+						class="text-gray-300 hover:text-white transition-colors duration-300 flex items-center text-lg">
+						<i class="far fa-envelope w-6"></i>
+						<span class="ml-2">Email</span>
+					</a>
+				</div>
+
+				<div class="border-t border-gray-600 pt-8 mt-8 text-sm text-gray-400">
+					<p>&copy; <span id="currentYear"></span> Haerul Yuda Aditiya. All Rights Reserved.</p>
+				</div>
+			</div>
+		</footer>
+
+		<script>
+			document.getElementById("currentYear").textContent = new Date().getFullYear();
+		</script>
+
+		<!-- Hidden Professional PDF Template -->
+		<div id="pdf-professional-container" class="pdf-pro-container">
+			<div id="pdf-professional-page" class="pdf-pro-page">
+				<!-- Professional CV content will be injected here -->
+			</div>
+		</div>
+
+		<script>
+			const { jsPDF } = window.jspdf;
+
+			// SINGLE SOURCE OF TRUTH
+			const portfolioData = {
+				name: "Haerul Yuda Aditiya",
+				title: "Mahasiswa Teknik Informatika & Web Developer | PHP | Laravel",
+				contact: {
+					phone: "+628816147969",
+					email: "haerulyudaaditiya@gmail.com",
+					github: "github.com/haerulyudaaditiya",
+					linkedin: "linkedin.com/in/haerul-yuda-aditiya",
+				},
+				profile:
+					"Mahasiswa semester 4 Program Studi Ilmu Komputer di Universitas Buana Perjuangan Karawang dengan IPK 3.78. Memiliki kompetensi kuat dalam pengembangan web menggunakan bahasa pemrograman PHP dan framework Laravel. Berpengalaman membangun berbagai proyek website dari tahap perencanaan hingga implementasi. Seorang individu yang gigih, terorganisir dengan manajemen waktu yang baik, dan mampu memecahkan masalah secara efektif.",
+				education: [
+					{
+						university: "Universitas Buana Perjuangan Karawang",
+						degree: "S1 | Teknik Informatika",
+						location: "Karawang, Jawa Barat",
+						period: "Sekarang",
+						gpa: "3.78",
+					},
+				],
+				skills: {
+					Teknis: ["Laravel", "PHP", "Bootstrap", "HTML", "CSS", "Javascript", "Ionic", "Angular", "TypeScript", "Git & Github", "MySQL"],
+					Konseptual: [
+						"Arsitektur MVC",
+						"Arsitektur Berbasis Komponen",
+						"Eloquent ORM",
+						"Manajemen Database Relasional",
+						"Pengembangan RESTful API",
+						"Pemecahan Masalah",
+						"Kolaborasi Tim",
+					],
+				},
+				experience: [
+					{
+						role: "Anggota UKM BPROTIC",
+						company: "Universitas Buana Perjuangan Karawang",
+						period: "Februari 2025 – Saat ini",
+						details: [
+							"Berperan aktif dalam kegiatan Unit Kegiatan Mahasiswa BPROTIC yang berfokus pada pengembangan minat dan bakat di bidang teknologi dan komunikasi.",
+							"Terlibat dalam berbagai kegiatan pelatihan, lomba, dan pengembangan proyek berbasis teknologi.",
+						],
+					},
+					{
+						role: "Freelancer",
+						company: "Proyek Independen",
+						period: "2024 – Saat ini",
+						details: [
+							"Membuat Website Company Profile Idarma Digital Technology untuk keperluan branding dan informasi perusahaan.",
+							"Mengembangkan Sistem Informasi Administrasi Desa berbasis web untuk mendukung pengelolaan data dan layanan administrasi desa.",
+						],
+					},
+					{
+						role: "Operator Packing",
+						company: "PT Meiji Food Indonesia, Karawang",
+						period: "Desember 2023 - Juni 2024",
+						details: [
+							"Melaksanakan proses manual packing, pemilihan material, serta melakukan paletting dan pengkodean.",
+							"Bertanggung jawab atas seleksi produk untuk dilabeli dan pelaksanaan proses pelabelan dengan akurat.",
+						],
+					},
+					{
+						role: "Operator Warehouse",
+						company: "Perum Percetakan Uang Republik Indonesia, Karawang",
+						period: "Juli 2022 - Desember 2022",
+						details: [
+							"Bertanggung jawab dalam proses pengambilan dan pengiriman barang secara tepat waktu.",
+							"Memastikan kesesuaian jumlah barang dengan data komputer.",
+							"Melakukan pendataan barang keluar masuk secara rutin.",
+						],
+					},
+				],
+				projects: [
+					{
+						title: "Pengembang Aplikasi SIPENA",
+						description:
+							"Merancang dan mengembangkan sistem informasi pengelolaan karyawan (SIPENA) secara full-stack. Proyek ini terdiri dari aplikasi mobile (Ionic/Angular) untuk karyawan dan panel admin berbasis web (Laravel). Bertanggung jawab dalam mengimplementasikan fitur-fitur inti seperti presensi berbasis geofencing dan alur pengajuan cuti.",
+						technologies: ["Laravel", "Ionic", "Angular", "Geofencing", "Full-Stack"],
+					},
+					{
+						title: "Pengembang Website Wejeatrans Rental Mobil",
+						description:
+							"Membuat website resmi Wejeatrans Rental Mobil sebagai platform pemesanan dan informasi layanan sewa kendaraan secara online. Mengembangkan antarmuka pengguna (UI/UX), sistem pemesanan otomatis, serta fitur responsif untuk berbagai perangkat.",
+						technologies: ["PHP", "Laravel", "UI/UX", "Responsive Design"],
+					},
+				],
+			};
+
+			function showTab(tabName) {
+				const tabs = ["projects", "services"];
+				tabs.forEach((tab) => {
+					document.getElementById(tab).classList.remove("active");
+					document.getElementById(tab + "-tab").classList.remove("active");
+				});
+				document.getElementById(tabName).classList.add("active");
+				document.getElementById(tabName + "-tab").classList.add("active");
+			}
+
+			function buildProfessionalPdfHtml() {
+				const container = document.getElementById("pdf-professional-page");
+				const data = portfolioData;
+
+				const contactHtml = `
+                <div class="pdf-pro-contact">
+                    <span><i class="fas fa-phone mr-1"></i> ${data.contact.phone}</span>
+                    <span><i class="far fa-envelope mr-1"></i> ${data.contact.email}</span>
+                    <span><i class="fab fa-github mr-1"></i> ${data.contact.github}</span>
+                    <span><i class="fab fa-linkedin-in mr-1"></i> ${data.contact.linkedin}</span>
+                </div>
+                `;
+
+				// Disesuaikan: Menambahkan GPA
+				const educationHtml = data.education
+					.map(
+						(edu) => `
+                    <div class="pdf-pro-grid">
+                        <div class="pdf-pro-grid-title">${edu.university}</div>
+                        <div class="pdf-pro-grid-content">
+                            <strong>${edu.degree}</strong><br>
+                            IPK: <strong>${edu.gpa}</strong>
+                        </div>
+                    </div>
+                `,
+					)
+					.join("");
+
+				// Disesuaikan: Menampilkan skills berdasarkan kategori
+				const skillsHtml = Object.keys(data.skills)
+					.map(
+						(key) => `
+                    <div class="pdf-pro-grid">
+                        <div class="pdf-pro-grid-title">${key}</div>
+                        <div class="pdf-pro-grid-content">
+                            ${data.skills[key].join(", ")}
+                        </div>
+                    </div>
+                `,
+					)
+					.join('<div style="margin-bottom: 2mm;"></div>');
+
+				const experienceHtml = data.experience
+					.map(
+						(job) => `
+                    <div class="pdf-pro-work-item">
+                        <div class="pdf-pro-work-header">
+                            <span class="pdf-pro-work-role">${job.role}</span>
+                            <span class="pdf-pro-work-date">${job.period}</span>
+                        </div>
+                        <p class="pdf-pro-work-company">${job.company}</p>
+                        <ul class="pdf-pro-work-details">
+                            ${job.details.map((d) => `<li>${d}</li>`).join("")}
+                        </ul>
+                    </div>
+                `,
+					)
+					.join("");
+
+				// Disesuaikan: Menghapus .services dan menambahkan .technologies
+				const projectsHtml = data.projects
+					.map(
+						(proj) => `
+                    <div class="pdf-pro-project-item">
+                        <h3 class="pdf-pro-project-title">${proj.title}</h3>
+                        <p class="pdf-pro-project-details">${proj.description}</p>
+                        <div class="pdf-pro-project-tech">
+                            <strong>Teknologi:</strong> ${proj.technologies.join(", ")}
+                        </div>
+                    </div>
+                `,
+					)
+					.join("");
+
+				// DIUBAH: Menambahkan inline style untuk margin dan page-break pada judul seksi
+				container.innerHTML = `
+                <div class="pdf-pro-header">
+                    <h1>${data.name}</h1>
+                    <h2>${data.title}</h2>
+                    ${contactHtml}
+                </div>
+                
+                <div class="pdf-pro-section-title" style="margin-top: 0;">PROFIL PRIBADI</div>
+                <p class="pdf-pro-profile-text">${data.profile.replace(/\n\n/g, "<br><br>")}</p>
+                
+                <div class="pdf-pro-section-title" style="margin-top: 8mm; page-break-after: avoid;">PENDIDIKAN</div>
+                ${educationHtml}
+
+                <div class="pdf-pro-section-title" style="margin-top: 8mm; page-break-after: avoid;">KEAHLIAN</div>
+                ${skillsHtml}
+
+                <div class="pdf-pro-section-title" style="margin-top: 8mm; page-break-after: avoid;">PENGALAMAN KERJA</div>
+                ${experienceHtml}
+
+                <div class="pdf-pro-section-title" style="margin-top: 8mm; page-break-after: avoid;">PROJEK</div>
+                ${projectsHtml}
+                `;
+			}
+
+			function generateCV() {
+				buildProfessionalPdfHtml();
+				const content = document.getElementById("pdf-professional-container");
+
+				html2canvas(content, {
+					scale: 2,
+					useCORS: true,
+					logging: false,
+				})
+					.then((canvas) => {
+						const pdf = new jsPDF({
+							orientation: "p",
+							unit: "mm",
+							format: "a4",
+						});
+
+						const pdfWidth = pdf.internal.pageSize.getWidth();
+						const pdfHeight = pdf.internal.pageSize.getHeight();
+
+						const canvasWidth = canvas.width;
+						const canvasHeight = canvas.height;
+
+						const marginTopMM = 10; // ubah nilai ini sesuai kebutuhan margin atas
+						const marginBottomMM = 19;
+
+						const usablePdfHeight = pdfHeight - marginTopMM - marginBottomMM;
+						const pageHeightInPx = canvasWidth * (usablePdfHeight / pdfWidth);
+
+						let renderedHeight = 0;
+
+						while (renderedHeight < canvasHeight) {
+							const pageCanvas = document.createElement("canvas");
+							const context = pageCanvas.getContext("2d");
+
+							pageCanvas.width = canvasWidth;
+							pageCanvas.height = Math.min(pageHeightInPx, canvasHeight - renderedHeight);
+
+							context.drawImage(canvas, 0, renderedHeight, canvasWidth, pageCanvas.height, 0, 0, canvasWidth, pageCanvas.height);
+
+							const imgData = pageCanvas.toDataURL("image/png");
+							if (renderedHeight > 0) pdf.addPage();
+							const imgHeightMM = (pageCanvas.height * pdfWidth) / canvasWidth;
+
+							pdf.addImage(imgData, "PNG", 0, marginTopMM, pdfWidth, imgHeightMM);
+
+							renderedHeight += pageCanvas.height;
+						}
+
+						pdf.save("CV-Haerul-Yuda-Aditiya.pdf");
+					})
+					.catch((err) => {
+						console.error("Error generating PDF:", err);
+					});
+			}
+
+			document.addEventListener("DOMContentLoaded", function () {
+				const data = portfolioData; // Pastikan portfolioData sudah didefinisikan
+
+				// --- PENYESUAIAN DIMULAI DI SINI ---
+
+				// 1. Mengubah string bulan menjadi angka untuk parsing tanggal
+				const monthMap = {
+					Januari: "01",
+					Februari: "02",
+					Maret: "03",
+					April: "04",
+					Mei: "05",
+					Juni: "06",
+					Juli: "07",
+					Agustus: "08",
+					September: "09",
+					Oktober: "10",
+					November: "11",
+					Desember: "12",
+				};
+
+				// 2. Memproses data pengalaman untuk menambahkan startDate dan endDate
+				data.experience.forEach((item) => {
+					const parts = item.period.split(/–|-/); // Memisahkan berdasarkan '–' atau '-'
+					const startStr = parts[0].trim();
+					const endStr = parts[1] ? parts[1].trim() : "Saat ini";
+
+					// Proses tanggal mulai
+					const startParts = startStr.split(" ");
+					if (startParts.length === 2) {
+						// Format "Bulan Tahun"
+						item.startDate = `${startParts[1]}-${monthMap[startParts[0]]}-01`;
+					} else {
+						// Format "Tahun"
+						item.startDate = `${startParts[0]}-01-01`;
+					}
+
+					// Proses tanggal selesai
+					if (endStr.toLowerCase().includes("saat ini")) {
+						item.endDate = new Date().toISOString().split("T")[0]; // Tanggal hari ini
+					} else {
+						const endParts = endStr.split(" ");
+						const endDate = new Date(endParts[1], monthMap[endParts[0]] - 1, 1);
+						const lastDay = new Date(endDate.getFullYear(), endDate.getMonth() + 1, 0).getDate(); // Hari terakhir di bulan itu
+						item.endDate = `${endParts[1]}-${monthMap[endParts[0]]}-${lastDay}`;
+					}
+				});
+
+				// 3. Menentukan urutan manual yang sesuai dengan CV Anda
+				const desiredOrder = ["Anggota UKM BPROTIC", "Freelancer", "Operator Packing", "Operator Warehouse"];
+
+				// 4. Mengurutkan data experience berdasarkan array desiredOrder
+				data.experience.sort((a, b) => {
+					const indexA = desiredOrder.indexOf(a.role);
+					const indexB = desiredOrder.indexOf(b.role);
+					return indexA - indexB;
+				});
+
+				// --- AKHIR DARI PENYESUAIAN ---
+
+				// Membuat elemen timeline
+				const timelineContainer = document.getElementById("timeline-container");
+				data.experience.forEach((item, index) => {
+					const position = index % 2 === 0 ? "left" : "right";
+					const timelineItemContainer = document.createElement("div");
+					timelineItemContainer.className = `timeline-item-container ${position}`;
+					let detailsHTML = item.details.map((detail) => `<li>${detail}</li>`).join("");
+
+					timelineItemContainer.innerHTML = `
+                        <div class="timeline-content bg-white p-6 rounded-xl shadow-lg">
+                            <time class="mb-1 text-sm font-normal leading-none text-gray-500">${item.period}</time>
+                            <h3 class="text-xl font-semibold text-gray-900">${item.role}</h3>
+                            <p class="text-lg text-gray-700 mb-4">${item.company}</p>
+                            <div class="timeline-details">
+                                <ul class="list-disc pl-5 text-base font-normal text-gray-600 space-y-2 mt-2">
+                                    ${detailsHTML}
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+					timelineContainer.appendChild(timelineItemContainer);
+					timelineItemContainer.querySelector(".timeline-content").addEventListener("click", function () {
+						this.classList.toggle("active");
+					});
+				});
+
+				// Membuat grafik durasi pengalaman
+				const ctx = document.getElementById("experienceChart").getContext("2d");
+				new Chart(ctx, {
+					type: "bar",
+					data: {
+						labels: data.experience.map((d) => d.role),
+						datasets: [
+							{
+								label: "Durasi Pengalaman",
+								data: data.experience.map((d) => [d.startDate, d.endDate]),
+								backgroundColor: "rgba(61, 64, 91, 0.7)", // Warna disesuaikan dengan tema
+								borderColor: "rgba(61, 64, 91, 1)",
+								borderWidth: 1,
+								barPercentage: 0.6,
+								borderRadius: 4,
+							},
+						],
+					},
+					options: {
+						indexAxis: "y",
+						responsive: true,
+						maintainAspectRatio: false,
+						scales: {
+							x: {
+								type: "time",
+								time: { unit: "month" }, // Mengubah unit agar lebih detail
+								min: "2022-01-01", // Menyesuaikan rentang tanggal
+								max: "2025-12-31",
+								grid: { color: "rgba(0,0,0,0.05)" },
+							},
+							y: { grid: { display: false } },
+						},
+						plugins: {
+							legend: { display: false },
+							tooltip: {
+								callbacks: {
+									label: function (context) {
+										const item = data.experience[context.dataIndex];
+										return `${item.role}: ${item.period}`;
+									},
+								},
+							},
+						},
+					},
+				});
+
+				document.getElementById("currentYear").textContent = new Date().getFullYear();
+			});
+		</script>
+	</body>
+
+	<style>
+		#backToTop {
+			display: none;
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			/* DIUBAH: Warna latar disesuaikan dengan tema utama */
+			background-color: #494a5b;
+			color: white;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			text-align: center;
+			line-height: 40px;
+			cursor: pointer;
+			/* DITAMBAHKAN: Efek bayangan agar tombol lebih menonjol */
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+			transition: background-color 0.3s, transform 0.2s;
+			z-index: 1000;
+		}
+
+		#backToTop:hover {
+			/* DIUBAH: Warna hover menjadi sedikit lebih gelap dari warna utama */
+			background-color: #2f3147;
+			/* DITAMBAHKAN: Sedikit efek angkat saat hover */
+			transform: translateY(-2px);
+		}
+	</style>
+
+	<body>
+		<button id="backToTop" title="Kembali ke atas" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fas fa-arrow-up"></i></button>
+
+		<script>
+			// Fungsi untuk menampilkan/menyembunyikan tombol back to top
+			window.onscroll = function () {
+				if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+					document.getElementById("backToTop").style.display = "block";
+				} else {
+					document.getElementById("backToTop").style.display = "none";
+				}
+			};
+		</script>
+	</body>
+</html>
