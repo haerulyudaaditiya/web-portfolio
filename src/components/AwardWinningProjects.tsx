@@ -24,8 +24,8 @@ export default function AwardWinningProjects() {
             {portfolioData.projects.map((project, index) => (
                 <div key={project.id} onMouseEnter={playHover}>
                     <TiltCard className="group h-[600px] w-full bg-neutral-900/10 border border-white/5 relative overflow-hidden rounded-xl">
-                        {/* Image Area */}
-                        <div className="relative h-2/3 w-full overflow-hidden border-b border-white/5">
+                        {/* Image Area - Reduced to 50% to give text more room */}
+                        <div className="relative h-1/2 w-full overflow-hidden border-b border-white/5">
                             <div className="absolute inset-0 bg-cyan-900/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                             <Image 
                                 src={project.image} 
@@ -38,22 +38,22 @@ export default function AwardWinningProjects() {
                             </div>
                         </div>
 
-                        {/* Content Area */}
-                        <div className="p-8 flex flex-col justify-between h-1/3 relative bg-[#020617]">
+                        {/* Content Area - Increased to 50% */}
+                        <div className="p-8 flex flex-col justify-between h-1/2 relative bg-[#020617]">
                             <div className="transform translate-z-20">
                                 <h3 className="text-3xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">{project.title}</h3>
-                                <p className="text-neutral-300 text-sm leading-relaxed line-clamp-2">{project.description}</p>
+                                <p className="text-neutral-300 text-sm leading-relaxed line-clamp-3 md:line-clamp-4">{project.description}</p>
                             </div>
                             
                             <div className="flex justify-between items-end border-t border-white/5 pt-6 mt-2">
-                                <div className="flex gap-2">
+                                <div className="flex gap-2 flex-wrap">
                                     {project.tech.slice(0, 3).map(t => (
                                         <span key={t} className="text-[10px] uppercase tracking-widest text-neutral-300 border border-neutral-700 px-2 py-1 rounded hover:border-cyan-500/50 hover:text-cyan-500 transition-colors">
                                             {t}
                                         </span>
                                     ))}
                                 </div>
-                                <ArrowUpRight className="text-neutral-500 group-hover:text-cyan-400 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+                                <ArrowUpRight className="text-neutral-500 group-hover:text-cyan-400 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-all shrink-0" />
                             </div>
                         </div>
                     </TiltCard>
