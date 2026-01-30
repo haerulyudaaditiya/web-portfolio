@@ -2,6 +2,7 @@ import { portfolioData } from '@/data/portfolio';
 import { Github, Linkedin, Instagram, Mail, ArrowUpRight, ArrowRight } from 'lucide-react';
 import { Canvas } from '@react-three/fiber';
 import CyberGlobe from './CyberGlobe';
+import Magnetic from './ui/Magnetic';
 
 export default function ContactFooter() {
   return (
@@ -30,14 +31,16 @@ export default function ContactFooter() {
                     HAVE A PROJECT?<br/> LET'S WORK TOGETHER.
                 </h2>
 
-                <a 
-                    href={portfolioData.profile.social.whatsapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full text-lg font-bold hover:bg-cyan-400 transition-all duration-300 hover:scale-105"
-                >
-                    Start Discussion <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+                <Magnetic>
+                    <a 
+                        href={portfolioData.profile.social.whatsapp}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full text-lg font-bold hover:bg-cyan-400 transition-all duration-300 hover:scale-105"
+                    >
+                        Start Discussion <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                </Magnetic>
             </div>
 
             {/* Bottom Grid: Links & Details */}

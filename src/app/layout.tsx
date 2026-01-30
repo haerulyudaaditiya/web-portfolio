@@ -4,6 +4,7 @@ import "./globals.css";
 import ParticleCursor from "@/components/ui/ParticleCursor";
 import SmoothScroll from "@/components/SmoothScroll";
 import CinematicGrain from "@/components/ui/CinematicGrain";
+import ScrollProgress from "@/components/ui/ScrollProgress";
 import Script from 'next/script';
 
 const geistSans = Geist({
@@ -50,6 +51,7 @@ export default function RootLayout({
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020617] text-white selection:bg-cyan-500 selection:text-black`}>
         <CinematicGrain />
+        <ScrollProgress />
         <SmoothScroll />
         <ParticleCursor />
         {children}
