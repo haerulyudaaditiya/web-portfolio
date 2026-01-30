@@ -5,7 +5,7 @@ import CyberGlobe from './CyberGlobe';
 
 export default function ContactFooter() {
   return (
-    <footer className="text-white py-20 px-6 border-t border-white/5 relative overflow-hidden z-10">
+    <footer id="contact" className="text-white py-20 px-6 border-t border-white/5 relative overflow-hidden z-10">
         
         {/* 3D Global Network */}
         <div className="absolute inset-0 pointer-events-none opacity-40">
@@ -31,7 +31,9 @@ export default function ContactFooter() {
                 </h2>
 
                 <a 
-                    href="mailto:hello@hyaditiya.com"
+                    href={portfolioData.profile.social.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full text-lg font-bold hover:bg-cyan-400 transition-all duration-300 hover:scale-105"
                 >
                     Start Discussion <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -43,7 +45,7 @@ export default function ContactFooter() {
                 
                 {/* Brand */}
                 <div className="col-span-1 lg:col-span-2">
-                    <h3 className="text-2xl font-bold tracking-tighter mb-4">HAERUL YUDA.</h3>
+                    <h3 className="text-2xl font-bold tracking-tighter mb-4">HAERUL YUDA ADITIYA.</h3>
                     <p className="text-neutral-300 max-w-sm mb-6 leading-relaxed">
                         Building digital experiences that combine technical excellence with visual impact.
                     </p>

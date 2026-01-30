@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ParticleCursor from "@/components/ui/ParticleCursor";
+import SmoothScroll from "@/components/SmoothScroll";
+import CinematicGrain from "@/components/ui/CinematicGrain";
 import Script from 'next/script';
 
 const geistSans = Geist({
@@ -14,16 +17,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://haerulyuda.dev'),
-  title: "Haerul Yuda Aditiya | Award-Winning Full Stack Developer",
-  description: "National award-winning Full Stack Developer specializing in Laravel, React, and Mobile Development. Turning complex problems into elegant code.",
+  metadataBase: new URL('https://portfolio-haerulyudaaditiya.netlify.app/'),
+  title: "Haerul Yuda Aditiya | Full Stack Developer",
+  description: "Full Stack Developer specializing in Laravel, React, and Mobile Development. Turning complex problems into elegant code.",
   keywords: ["Full Stack Developer", "Laravel", "React", "Web Developer", "Mobile Developer", "Indonesia", "Portfolio"],
   authors: [{ name: "Haerul Yuda Aditiya" }],
   openGraph: {
     type: "website",
-    url: "https://haerulyuda.dev",
+    url: "https://portfolio-haerulyudaaditiya.netlify.app/",
     title: "Haerul Yuda Aditiya | Full Stack Developer",
-    description: "Award-winning developer building digital experiences that win.",
+    description: "Professional developer building digital experiences that win.",
     images: ["/images/og-image.jpg"],
   },
   twitter: {
@@ -43,9 +46,12 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         <meta name="theme-color" content="#06b6d4" />
-        <link rel="canonical" href="https://haerulyuda.dev" />
+        <link rel="canonical" href="https://portfolio-haerulyudaaditiya.netlify.app/" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020617] text-white selection:bg-cyan-500 selection:text-black`}>
+        <CinematicGrain />
+        <SmoothScroll />
+        <ParticleCursor />
         {children}
       </body>
     </html>

@@ -53,6 +53,7 @@ function Hologram(props: any) {
 
 import GlitchText from './GlitchText';
 import useCyberSound from '@/hooks/useCyberSound';
+import CyberReveal from './ui/CyberReveal';
 
 // ... (previous imports and Hologram component remain same, just updating the HeroSection export)
 
@@ -72,10 +73,8 @@ export default function HeroSection() {
       {/* Hero Content */}
       <div className="z-10 text-center px-4 mix-blend-screen select-none">
         
-        <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+        <CyberReveal 
+            direction="left"
             className="flex flex-col items-center"
         >
             <div className="mb-6 px-4 py-1 border border-cyan-500/30 bg-cyan-500/10 rounded-full backdrop-blur-md">
@@ -93,14 +92,14 @@ export default function HeroSection() {
                 onMouseEnter={playHover}
             >
                 <h1 className="text-[10vw] md:text-[8vw] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-cyan-100 to-cyan-900/50">
-                    <GlitchText text="HAERUL YUDA" />
+                    <GlitchText text="HAERUL YUDA" delay={500} />
                 </h1>
                 <h1 className="text-[10vw] md:text-[8vw] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-cyan-100 to-cyan-900/50">
-                    <GlitchText text="ADITIYA" />
+                    <GlitchText text="ADITIYA" delay={1500} />
                 </h1>
             </div>
             
-        </motion.div>
+        </CyberReveal>
 
         <motion.div 
             initial={{ opacity: 0 }}
@@ -145,6 +144,23 @@ export default function HeroSection() {
                 </motion.div>
             ))}
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2, duration: 1 }}
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+        >
+            <span className="text-[10px] font-mono text-cyan-500/50 uppercase tracking-[0.2em] animate-pulse">Scroll</span>
+            <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500/0 via-cyan-500 to-cyan-500/0 relative overflow-hidden">
+                <motion.div 
+                    animate={{ top: ["0%", "100%"] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                    className="absolute top-0 left-0 w-full h-1/2 bg-cyan-400 blur-[1px]"
+                />
+            </div>
+        </motion.div>
 
       </div>
       

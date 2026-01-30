@@ -16,7 +16,7 @@ const COMMANDS: Record<string, string | (() => string)> = {
   experience: () => portfolioData.experiences.map(e => `[${e.duration}] ${e.role} at ${e.company}`).join('\n'),
   // Easter Eggs
   hire: () => `\n🎉 CONGRATULATIONS! You've unlocked the secret hiring portal!\n\n→ Send me an email: ${portfolioData.profile.email}\n→ Or WhatsApp: ${portfolioData.profile.social.whatsapp}\n\nI'm available for freelance projects and full-time opportunities!\n`,
-  secret: () => `\n🤫 You found a secret!\n\nFun Facts about Haerul:\n- ☕ Runs on coffee and code\n- 🎮 Gamer by night\n- 📚 Lifelong learner\n- 🏆 National Award Winner\n`,
+  secret: () => `\n🤫 You found a secret!\n\nFun Facts about Haerul:\n- ☕ Runs on coffee and code\n- �️ Mountain Climber & Runner\n- 📚 Lifelong learner\n`,
   game: () => `\n🎮 MINI GAME: Guess the Number (1-10)\n\nType "guess [number]" to play!\n(Hint: The answer is always 7... or is it? 😉)\n`,
   rickroll: () => `\n🎵 Never gonna give you up...\n🎵 Never gonna let you down...\n🎵 Never gonna run around and desert you!\n\nhttps://www.youtube.com/watch?v=dQw4w9WgXcQ\n\nYou've been rickrolled! 😂\n`,
   guess: () => `\n🎉 YOU WIN! (Not really, I just let everyone win)\n\nThanks for playing! Now go hire me. 😄\n`,

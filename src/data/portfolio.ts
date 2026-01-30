@@ -76,7 +76,7 @@ export const portfolioData: PortfolioData = {
   profile: {
     name: 'Haerul Yuda Aditiya',
     role: 'Full Stack Web & Mobile Developer',
-    title: 'Award-Winning Software Engineer',
+    title: 'Software Engineer',
     university: 'Universitas Buana Perjuangan Karawang',
     semester: 5,
     gpa: 3.78,
@@ -89,7 +89,7 @@ export const portfolioData: PortfolioData = {
       github: 'https://github.com/haerulyudaaditiya',
       linkedin: 'https://linkedin.com/in/haerul-yuda-aditiya',
       whatsapp: 'https://wa.me/628816147969',
-      instagram: 'https://instagram.com/haerulyudaa',
+      instagram: 'https://instagram.com/haerulyuda',
     },
   },
   skills: [
@@ -110,7 +110,7 @@ export const portfolioData: PortfolioData = {
     {
       id: 'sipena-hris',
       title: 'SIPENA HRIS System',
-      description: 'Comprehensive HR Management System with geofencing-based attendance, leave management, and employee performance tracking. Award-winning solution for enterprise workforce management.',
+      description: 'Comprehensive HR Management System with geofencing-based attendance, leave management, and employee performance tracking. Modern solution for enterprise workforce management.',
       tech: ['Laravel', 'Ionic', 'Angular', 'Geofencing', 'MySQL', 'REST API'],
       image: '/images/sipena.jpg',
       highlight: '2nd Place Expo Technovision 2024',
@@ -124,7 +124,7 @@ export const portfolioData: PortfolioData = {
     {
       id: 'aksaraquest',
       title: 'AksaraQuest - Gamified Learning',
-      description: 'Interactive Sundanese script learning platform combining gamification with cultural education. National award-winning edtech solution.',
+      description: 'Interactive Sundanese script learning platform combining gamification with cultural education.',
       tech: ['Vue.js', 'Laravel', 'Gamification', 'WebSockets', 'MySQL'],
       image: '/images/aksaraquest.jpg',
       highlight: '1st Place National Media Competition',
