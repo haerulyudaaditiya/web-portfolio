@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial, Float } from '@react-three/drei';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
 
@@ -57,6 +57,45 @@ import CyberReveal from './ui/CyberReveal';
 
 // ... (previous imports and Hologram component remain same, just updating the HeroSection export)
 
+// Parallax Helper Components
+function MouseParallaxContainer({ children, className }: { children: React.ReactNode, className?: string }) {
+    const ref = useRef<HTMLDivElement>(null);
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!ref.current) return;
+        const { width, height, left, top } = ref.current.getBoundingClientRect();
+        const x = (e.clientX - left - width / 2) / (width / 2);
+        const y = (e.clientY - top - height / 2) / (height / 2);
+        setMousePos({ x, y });
+    };
+
+    return (
+        <div ref={ref} onMouseMove={handleMouseMove} className={className}>
+            <MouseParallaxContext.Provider value={mousePos}>
+                {children}
+            </MouseParallaxContext.Provider>
+        </div>
+    );
+}
+
+const MouseParallaxContext = React.createContext({ x: 0, y: 0 });
+
+function ParallaxItem({ children, depth = 0.1, className, style }: { children: React.ReactNode, depth?: number, className?: string, style?: React.CSSProperties }) {
+    const { x, y } = React.useContext(MouseParallaxContext);
+    
+    return (
+        <motion.div 
+            className={className}
+            style={style}
+            animate={{ x: x * depth * 50, y: y * depth * 50 }}
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+        >
+            {children}
+        </motion.div>
+    );
+}
+
 export default function HeroSection() {
   const { playHover } = useCyberSound();
 
@@ -88,13 +127,13 @@ export default function HeroSection() {
             </div>
 
             <div 
-                className="flex flex-col items-center gap-0 leading-[0.85] cursor-default"
+                className="flex flex-col items-center gap-0 leading-none cursor-default py-4"
                 onMouseEnter={playHover}
             >
-                <h1 className="text-[10vw] md:text-[8vw] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-cyan-100 to-cyan-900/50">
+                <h1 className="text-4xl md:text-[8vw] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-cyan-100 to-cyan-900/50">
                     <GlitchText text="HAERUL YUDA" delay={500} />
                 </h1>
-                <h1 className="text-[10vw] md:text-[8vw] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-cyan-100 to-cyan-900/50">
+                <h1 className="text-4xl md:text-[8vw] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-cyan-100 to-cyan-900/50 mt-2 md:mt-0">
                     <GlitchText text="ADITIYA" delay={1500} />
                 </h1>
             </div>
@@ -108,42 +147,42 @@ export default function HeroSection() {
             className="mt-12 max-w-lg mx-auto"
         >
             <p className="text-sm md:text-base font-mono text-cyan-500/60 leading-relaxed uppercase tracking-widest">
-                Full Stack Architecture <span className="text-cyan-500">•</span> Digital Systems <span className="text-cyan-500">•</span> UI/UX
+                Full Stack Architecture <span className="text-cyan-500">•</span> Digital Systems
             </p>
         </motion.div>
 
-        {/* Floating Code Fragments */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Floating Code Fragments with Parallax */}
+        <MouseParallaxContainer className="absolute inset-0 pointer-events-none overflow-hidden">
             {[
-                { text: "<div>", top: "20%", left: "10%", delay: 0 },
-                { text: "const active = true;", top: "30%", right: "15%", delay: 2 },
-                { text: "npm run build", bottom: "25%", left: "20%", delay: 4 },
-                { text: "git push origin main", top: "15%", right: "30%", delay: 1 },
-                { text: "return 0;", bottom: "30%", right: "10%", delay: 3 },
-                { text: "sudo apt-get update", top: "60%", left: "5%", delay: 5 },
-                { text: "console.log('Hello');", bottom: "10%", right: "20%", delay: 2.5 },
+                { text: "<div>", top: "20%", left: "10%", delay: 0, depth: 0.1 },
+                { text: "const active = true;", top: "30%", right: "15%", delay: 2, depth: 0.2 },
+                { text: "npm run build", bottom: "25%", left: "20%", delay: 4, depth: 0.15 },
+                { text: "git push origin main", top: "15%", right: "30%", delay: 1, depth: 0.3 },
+                { text: "return 0;", bottom: "30%", right: "10%", delay: 3, depth: 0.1 },
+                { text: "sudo apt-get update", top: "60%", left: "5%", delay: 5, depth: 0.25 },
+                { text: "console.log('Hello');", bottom: "10%", right: "20%", delay: 2.5, depth: 0.15 },
             ].map((item, i) => (
-                <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ 
-                        opacity: [0, 0.4, 0], 
-                        y: -50,
-                        rotate: [0, Math.random() * 10 - 5, 0]
-                    }}
-                    transition={{ 
-                        duration: 8 + Math.random() * 5, 
-                        repeat: Infinity, 
-                        delay: item.delay,
-                        ease: "linear"
-                    }}
-                    className="absolute text-cyan-500/20 font-mono text-xs md:text-sm whitespace-nowrap"
-                    style={{ top: item.top, left: item.left, right: item.right, bottom: item.bottom }}
-                >
-                    {item.text}
-                </motion.div>
+                <ParallaxItem key={i} depth={item.depth} className="absolute" style={{ top: item.top, left: item.left, right: item.right, bottom: item.bottom }}>
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ 
+                            opacity: [0, 0.4, 0], 
+                            y: -50,
+                            rotate: [0, Math.random() * 10 - 5, 0]
+                        }}
+                        transition={{ 
+                            duration: 8 + Math.random() * 5, 
+                            repeat: Infinity, 
+                            delay: item.delay,
+                            ease: "linear"
+                        }}
+                        className="text-cyan-500/20 font-mono text-xs md:text-sm whitespace-nowrap"
+                    >
+                        {item.text}
+                    </motion.div>
+                </ParallaxItem>
             ))}
-        </div>
+        </MouseParallaxContainer>
 
         {/* Scroll Indicator */}
         <motion.div 

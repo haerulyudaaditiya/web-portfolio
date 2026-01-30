@@ -36,7 +36,7 @@ export default function CyberBackground() {
                 y: [0, -50, 0],
             }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute top-[20%] left-[20%] w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-[120px] mix-blend-screen" 
+            className="absolute top-[20%] left-[20%] w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-[120px] mix-blend-screen will-change-transform" 
         />
         
         <motion.div 
@@ -45,7 +45,7 @@ export default function CyberBackground() {
                 y: [0, 50, 0],
             }}
             transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            className="absolute bottom-[20%] right-[20%] w-[500px] h-[500px] bg-fuchsia-500/20 rounded-full blur-[120px] mix-blend-screen" 
+            className="absolute bottom-[20%] right-[20%] w-[500px] h-[500px] bg-fuchsia-500/20 rounded-full blur-[120px] mix-blend-screen will-change-transform" 
         />
     </div>
   );

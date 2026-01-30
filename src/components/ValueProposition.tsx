@@ -15,7 +15,7 @@ export default function ValueProposition() {
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
 
   return (
-    <section ref={containerRef} className="py-40 text-white px-6 md:px-12 border-t border-white/10 relative overflow-hidden z-10">
+    <section id="philosophy" ref={containerRef} className="py-40 text-white px-6 md:px-12 border-t border-white/10 relative overflow-hidden z-10">
       {/* Background Grid */}
       <div className="absolute inset-0 opacity-20 pointer-events-none" 
            style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)', backgroundSize: '100px 100px' }} 

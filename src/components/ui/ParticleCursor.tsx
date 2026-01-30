@@ -1,79 +1,114 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function ParticleCursor() {
-  useEffect(() => {
-    const cursor = document.createElement('div');
-    cursor.style.width = '20px';
-    cursor.style.height = '20px';
-    cursor.style.border = '2px solid #06b6d4'; // Cyan-500
-    cursor.style.borderRadius = '50%';
-    cursor.style.position = 'fixed';
-    cursor.style.pointerEvents = 'none';
-    cursor.style.zIndex = '9999';
-    cursor.style.transform = 'translate(-50%, -50%)';
-    cursor.style.transition = 'transform 0.1s ease-out';
-    cursor.style.mixBlendMode = 'difference';
-    document.body.appendChild(cursor);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    const particles: HTMLDivElement[] = [];
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    
+    // Resize handler
+    const onResize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    };
+    
+    window.addEventListener('resize', onResize);
+    onResize();
+
+    // Particles
+    const particles: { x: number; y: number; size: number; life: number; velocity: { x: number; y: number } }[] = [];
+    const mouse = { x: -100, y: -100 };
+    const cursor = { x: -100, y: -100 }; // Smooth cursor position
 
     const onMouseMove = (e: MouseEvent) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-
-      // Create trail particle
-      const particle = document.createElement('div');
-      particle.style.width = '4px';
-      particle.style.height = '4px';
-      particle.style.background = '#06b6d4';
-      particle.style.borderRadius = '50%';
-      particle.style.position = 'fixed';
-      particle.style.left = e.clientX + 'px';
-      particle.style.top = e.clientY + 'px';
-      particle.style.pointerEvents = 'none';
-      particle.style.zIndex = '9998';
-      document.body.appendChild(particle);
-      particles.push(particle);
-
-      // Animate particle
-      const animation = particle.animate([
-        { transform: 'scale(1)', opacity: 0.8 },
-        { transform: 'scale(0)', opacity: 0 }
-      ], {
-        duration: 500,
-        easing: 'ease-out'
-      });
-
-      animation.onfinish = () => {
-        particle.remove();
-        particles.indexOf(particle) > -1 && particles.splice(particles.indexOf(particle), 1);
-      };
-    };
-
-    const onMouseDown = () => {
-      cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
-      cursor.style.background = 'rgba(6, 182, 212, 0.2)';
-    };
-
-    const onMouseUp = () => {
-        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-        cursor.style.background = 'transparent';
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
     };
 
     window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mouseup', onMouseUp);
+
+    // Animation Loop
+    let animationFrameId: number;
+    
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      // Smooth cursor lerp
+      cursor.x += (mouse.x - cursor.x) * 0.15;
+      cursor.y += (mouse.y - cursor.y) * 0.15;
+
+      // Add new particle
+      if (Math.abs(mouse.x - cursor.x) > 0.1 || Math.abs(mouse.y - cursor.y) > 0.1) {
+          particles.push({
+            x: cursor.x,
+            y: cursor.y,
+            size: Math.random() * 2 + 1,
+            life: 1,
+            velocity: {
+                x: (Math.random() - 0.5) * 0.5,
+                y: (Math.random() - 0.5) * 0.5
+            }
+          });
+      }
+
+      // Draw Main Cursor
+      ctx.beginPath();
+      ctx.arc(cursor.x, cursor.y, 8, 0, Math.PI * 2);
+      ctx.strokeStyle = '#06b6d4';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Draw Particles
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        
+        // Update
+        p.life -= 0.02;
+        p.x += p.velocity.x;
+        p.y += p.velocity.y;
+        p.size *= 0.95; // Shrink
+
+        // Draw
+        ctx.fillStyle = `rgba(6, 182, 212, ${p.life})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Remove dead particles
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
 
     return () => {
+      window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mousedown', onMouseDown);
-      window.removeEventListener('mouseup', onMouseUp);
-      cursor.remove();
-      particles.forEach(p => p.remove());
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
-  return null;
+  return (
+    <canvas 
+        ref={canvasRef}
+        className="fixed inset-0 pointer-events-none z-[9999] mix-blend-screen"
+        style={{ width: '100vw', height: '100vh' }}
+    />
+  );
 }

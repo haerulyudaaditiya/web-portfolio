@@ -5,36 +5,51 @@ import { useFrame } from '@react-three/fiber';
 import { Sphere } from '@react-three/drei';
 import * as THREE from 'three';
 
+// ... imports ...
+import { Points, PointMaterial } from '@react-three/drei';
+
 export default function CyberGlobe() {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const ref = useRef<THREE.Points>(null);
+  
+  // Generate particles
+  const particles = new Float32Array(5000 * 3);
+  for(let i=0; i<5000; i++) {
+    const theta = 2 * Math.PI * Math.random();
+    const phi = Math.acos(2 * Math.random() - 1);
+    const r = 2.5; 
+    
+    // Add some random noise for "cloud" effect
+    const x = r * Math.sin(phi) * Math.cos(theta);
+    const y = r * Math.sin(phi) * Math.sin(theta);
+    const z = r * Math.cos(phi);
+    
+    particles[i*3] = x;
+    particles[i*3+1] = y;
+    particles[i*3+2] = z;
+  }
 
   useFrame((state, delta) => {
-    if (meshRef.current) {
-        meshRef.current.rotation.y += delta * 0.15;
+    if (ref.current) {
+        ref.current.rotation.y += delta * 0.1;
     }
   });
 
   return (
-    <group>
-        {/* Main Wireframe Globe */}
-        <Sphere args={[2.5, 32, 32]} ref={meshRef}>
-            <meshBasicMaterial 
-                color="#06b6d4" 
-                wireframe 
-                transparent 
-                opacity={0.15} 
-            />
-        </Sphere>
-        
-        {/* Inner Core Glow */}
-        <Sphere args={[2, 16, 16]}>
-             <meshBasicMaterial 
-                color="#0891b2" 
-                transparent 
-                opacity={0.05} 
+    <group rotation={[0,0,Math.PI/6]}>
+       <Points ref={ref} positions={particles} stride={3} frustumCulled={false}>
+            <PointMaterial
+                transparent
+                color="#06b6d4"
+                size={0.02}
+                sizeAttenuation={true}
+                depthWrite={false}
                 blending={THREE.AdditiveBlending}
             />
-        </Sphere>
+       </Points>
+       {/* Core */}
+       <Sphere args={[2.4, 32, 32]}>
+             <meshBasicMaterial color="black" />
+       </Sphere>
     </group>
   );
 }

@@ -12,7 +12,7 @@ export default function Navigation() {
 
   const navItems = [
     { name: 'Home', link: '#', icon: Home },
-    { name: 'About', link: '#about', icon: User },
+    { name: 'About', link: '#philosophy', icon: User },
     { name: 'Work', link: '#projects', icon: Briefcase },
     { name: 'Skills', link: '#skills', icon: Zap },
     { name: 'Experience', link: '#experience', icon: FileText },

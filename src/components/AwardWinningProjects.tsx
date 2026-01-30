@@ -1,66 +1,72 @@
+'use client';
+
 import { portfolioData } from '@/data/portfolio';
-import TiltCard from './TiltCard';
+import { ArrowUpRight, Trophy } from 'lucide-react';
 import Image from 'next/image';
-import { ArrowUpRight } from 'lucide-react';
+import SpotlightCard from '@/components/ui/SpotlightCard';
+import SectionHeading from '@/components/ui/SectionHeading';
 import useCyberSound from '@/hooks/useCyberSound';
 
-export default function AwardWinningProjects() {
+export default function ProjectShowcase() {
   const { playHover } = useCyberSound();
 
   return (
-    <section id="projects" className="py-40 px-6 relative z-10">
+    <section id="projects" className="py-20 px-6 relative z-10">
       <div className="container mx-auto">
-        <div className="mb-20 flex flex-col md:flex-row justify-between items-end gap-6 text-white">
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">
-                DEPLOYED <span className="text-neutral-500">UNITS</span>
-            </h2>
-            <div className="flex items-center gap-2">
-                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                 <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest">Op. Status: Active</span>
-            </div>
-        </div>
+        <SectionHeading title="FEATURED PROJECTS" subtitle="Selected Work" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {portfolioData.projects.map((project, index) => (
-                <div key={project.id} onMouseEnter={playHover}>
-                    <TiltCard className="group h-[600px] w-full bg-neutral-900/10 border border-white/5 relative overflow-hidden rounded-xl">
-                        {/* Image Area - Reduced to 50% to give text more room */}
-                        <div className="relative h-1/2 w-full overflow-hidden border-b border-white/5">
-                            <div className="absolute inset-0 bg-cyan-900/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                            <Image 
-                                src={project.image} 
-                                alt={project.title}
-                                fill
-                                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
-                            />
-                            <div className="absolute top-4 right-4 z-20 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 translate-z-10">
-                                <span className="text-xs font-mono text-white">{project.type}</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {portfolioData.projects.map((project, i) => (
+            <SpotlightCard key={project.id} className="group">
+                <div 
+                    className="flex flex-col h-full bg-black/40 backdrop-blur-sm p-6"
+                    onMouseEnter={playHover}
+                >
+                    {/* Image */}
+                    <div className="relative h-48 w-full mb-6 rounded-lg overflow-hidden border border-white/10 group-hover:border-cyan-500/50 transition-colors">
+                        <div className="absolute inset-0 bg-cyan-900/20 group-hover:bg-transparent transition-colors z-10" />
+                        <Image 
+                            src={project.image} 
+                            alt={project.title} 
+                            fill 
+                            className="object-cover transform group-hover:scale-110 transition-transform duration-700"
+                        />
+                        {project.highlight && (
+                            <div className="absolute top-2 right-2 z-20 bg-cyan-500 text-black text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1 shadow-[0_0_10px_rgba(6,182,212,0.5)]">
+                                <Trophy size={10} />
+                                {project.highlight}
                             </div>
+                        )}
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 flex flex-col">
+                        <div className="flex justify-between items-start mb-4">
+                            <div>
+                                <span className="text-cyan-400 text-xs font-mono uppercase tracking-wider mb-2 block">{project.type}</span>
+                                <h3 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors leading-tight">{project.title}</h3>
+                            </div>
+                            <ArrowUpRight className="text-neutral-500 group-hover:text-cyan-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
                         </div>
 
-                        {/* Content Area - Increased to 50% */}
-                        <div className="p-8 flex flex-col justify-between h-1/2 relative bg-[#020617]">
-                            <div className="transform translate-z-20">
-                                <h3 className="text-3xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">{project.title}</h3>
-                                <p className="text-neutral-300 text-sm leading-relaxed line-clamp-3 md:line-clamp-4">{project.description}</p>
-                            </div>
-                            
-                            <div className="flex justify-between items-end border-t border-white/5 pt-6 mt-2">
-                                <div className="flex gap-2 flex-wrap">
-                                    {project.tech.slice(0, 3).map(t => (
-                                        <span key={t} className="text-[10px] uppercase tracking-widest text-neutral-300 border border-neutral-700 px-2 py-1 rounded hover:border-cyan-500/50 hover:text-cyan-500 transition-colors">
-                                            {t}
-                                        </span>
-                                    ))}
-                                </div>
-                                <ArrowUpRight className="text-neutral-500 group-hover:text-cyan-400 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-all shrink-0" />
+                        <p className="text-neutral-400 text-sm mb-6 line-clamp-3">
+                            {project.description}
+                        </p>
+
+                        <div className="mt-auto">
+                            <div className="flex flex-wrap gap-2 mb-4">
+                                {project.tech.slice(0, 3).map(t => (
+                                    <span key={t} className="text-[10px] uppercase font-bold text-neutral-500 bg-white/5 px-2 py-1 rounded border border-white/5">
+                                        {t}
+                                    </span>
+                                ))}
                             </div>
                         </div>
-                    </TiltCard>
+                    </div>
                 </div>
-            ))}
+            </SpotlightCard>
+          ))}
         </div>
-
       </div>
     </section>
   );
