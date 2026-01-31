@@ -5,6 +5,7 @@ import ParticleCursor from "@/components/ui/ParticleCursor";
 import SmoothScroll from "@/components/SmoothScroll";
 import CinematicGrain from "@/components/ui/CinematicGrain";
 import ScrollProgress from "@/components/ui/ScrollProgress";
+import SystemBoot from "@/components/ui/SystemBoot";
 import Script from 'next/script';
 
 const geistSans = Geist({
@@ -50,6 +51,7 @@ export default function RootLayout({
         <link rel="canonical" href="https://portfolio-haerulyudaaditiya.netlify.app/" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020617] text-white selection:bg-cyan-500 selection:text-black`}>
+        <SystemBoot />
         <CinematicGrain />
         <ScrollProgress />
         <SmoothScroll />
