@@ -150,17 +150,18 @@ export default function Terminal() {
                 <motion.div 
                     drag={!isMaximized}
                     dragMomentum={false}
-                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                    initial={{ opacity: 0, scale: 0.8, y: 20, x: 0 }}
                     animate={{ 
                         opacity: 1, 
                         scale: 1, 
                         y: 0,
+                        x: 0,
                         width: isMaximized ? '100vw' : 'min(800px, 95vw)',
-                        height: isMaximized ? '100vh' : 'min(600px, 80vh)',
+                        height: isMaximized ? '100dvh' : 'min(600px, 80vh)',
                         borderRadius: isMaximized ? 0 : '0.5rem'
                     }}
-                    exit={{ opacity: 0, scale: 0.8, y: 20 }}
-                    className="pointer-events-auto bg-black/95 border border-green-500/50 shadow-[0_0_50px_rgba(0,255,0,0.15)] flex flex-col font-mono text-green-500 overflow-hidden relative"
+                    exit={{ opacity: 0, scale: 0.8, y: 20, x: 0 }}
+                    className={`pointer-events-auto bg-black/95 border border-green-500/50 shadow-[0_0_50px_rgba(0,255,0,0.15)] flex flex-col font-mono text-green-500 overflow-hidden relative ${isMaximized ? 'pt-[env(safe-area-inset-top)]' : ''}`}
                 >
                     {/* Header */}
                     <div 
