@@ -52,7 +52,8 @@ export default function SystemBoot() {
       const timeouts: NodeJS.Timeout[] = [];
 
       BOOT_LOGS.forEach((line, index) => {
-        const lineDelay = Math.random() * 100 + 30; // Fast typing
+        // Slower, more readable typing
+        const lineDelay = Math.random() * 400 + 100;
         delay += lineDelay;
 
         const t = setTimeout(() => {
