@@ -100,7 +100,7 @@ export default function HeroSection() {
   const { playHover } = useCyberSound();
 
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative h-screen w-full flex items-center justify-center overflow-hidden">
       
       {/* 3D Canvas */}
       <div className="absolute inset-0 z-0">

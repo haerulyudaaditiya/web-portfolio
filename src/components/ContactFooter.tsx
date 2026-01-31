@@ -76,10 +76,15 @@ export default function ContactFooter() {
                 <div>
                     <h3 className="font-mono text-xs text-neutral-400 uppercase tracking-widest mb-6">Sitemap</h3>
                     <ul className="space-y-4">
-                        {['Home', 'Work', 'Skills', 'Certificates'].map((item) => (
-                            <li key={item}>
-                                <a href={`#${item.toLowerCase()}`} className="text-neutral-300 hover:text-white transition-colors text-sm">
-                                    {item}
+                        {[
+                            { label: 'Home', href: '#home' },
+                            { label: 'Work', href: '#projects' },
+                            { label: 'Skills', href: '#skills' },
+                            { label: 'Certificates', href: '#certificates' },
+                        ].map((item) => (
+                            <li key={item.label}>
+                                <a href={item.href} className="text-neutral-300 hover:text-white transition-colors text-sm">
+                                    {item.label}
                                 </a>
                             </li>
                         ))}

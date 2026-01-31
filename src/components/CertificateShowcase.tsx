@@ -26,7 +26,7 @@ export default function CertificateShowcase() {
   });
 
   return (
-    <section className="py-40 px-6 relative z-10">
+    <section id="certificates" className="py-40 px-6 relative z-10">
       <div className="container mx-auto">
         {/* Header */}
         <div className="mb-20 flex flex-col md:flex-row justify-between items-end gap-8">
