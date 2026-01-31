@@ -3,11 +3,8 @@
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
 import { useTerminalStore } from '@/store/useTerminalStore';
-import LoadingScreen from '@/components/LoadingScreen';
 import Navigation from '@/components/Navigation';
 import { ArrowUp } from 'lucide-react';
-
-const CustomCursor = dynamic(() => import('@/components/CustomCursor'), { ssr: false });
 const HeroSection = dynamic(() => import('@/components/HeroSection'), { 
   ssr: false,
   loading: () => <div className="h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-600"></div></div>
@@ -22,15 +19,11 @@ const Terminal = dynamic(() => import('@/components/Terminal'), { ssr: false });
 const CyberBackground = dynamic(() => import('@/components/CyberBackground'), { ssr: false });
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const { toggleOpen } = useTerminalStore();
 
   useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => setIsLoading(false), 1000);
-    
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.body.scrollHeight - window.innerHeight;
@@ -41,7 +34,6 @@ export default function Home() {
 
     window.addEventListener('scroll', handleScroll);
     return () => {
-      clearTimeout(timer);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -49,10 +41,6 @@ export default function Home() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
 
   return (
     <main className="min-h-screen text-white overflow-x-hidden relative selection:bg-cyan-500 selection:text-black">
@@ -76,9 +64,6 @@ export default function Home() {
       {/* Background Atmosphere */}
       <CyberBackground />
       
-      {/* Custom Cursor */}
-      <CustomCursor />
-
       {/* Navigation */}
       <Navigation />
       
