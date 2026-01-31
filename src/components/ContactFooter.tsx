@@ -27,7 +27,7 @@ export default function ContactFooter() {
                     Available for New Projects
                 </div>
 
-                <h2 className="text-5xl md:text-8xl font-black tracking-tighter mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-500">
+                <h2 className="text-3xl md:text-8xl font-black tracking-tighter mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-500 leading-tight">
                     HAVE A PROJECT?<br/> LET'S WORK TOGETHER.
                 </h2>
 

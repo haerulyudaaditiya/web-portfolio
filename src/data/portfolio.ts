@@ -6,7 +6,8 @@ export interface Project {
   description: string;
   tech: string[];
   image: string;
-  link?: string;
+  liveUrl?: string;
+  repoUrl?: string;
   highlight?: string;
   type: 'Web' | 'Mobile' | 'Full Stack' | 'HRIS' | 'Gamification';
   results: string[];
@@ -115,6 +116,7 @@ export const portfolioData: PortfolioData = {
       image: '/images/sipena.jpg',
       highlight: '2nd Place Expo Technovision 2024',
       type: 'HRIS',
+      repoUrl: 'https://github.com/haerulyudaaditiya/sipena-hris',
       results: [
         'Reduced manual HR processes by 80%',
         'Improved attendance accuracy by 95%',
@@ -129,6 +131,8 @@ export const portfolioData: PortfolioData = {
       image: '/images/aksaraquest.jpg',
       highlight: '1st Place National Media Competition',
       type: 'Gamification',
+      liveUrl: 'https://aksaraquest.com',
+      repoUrl: 'https://github.com/haerulyudaaditiya/aksaraquest',
       results: [
         'Increased student engagement by 300%',
         'Winner of national innovation competition',
@@ -142,6 +146,7 @@ export const portfolioData: PortfolioData = {
       tech: ['PHP', 'Laravel', 'Bootstrap', 'MySQL', 'Payment Gateway'],
       image: '/images/wejea.png',
       type: 'Web',
+      liveUrl: 'https://wejeatrans.com',
       results: [
         'Increased bookings by 150%',
         'Reduced manual work by 70%',

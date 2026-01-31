@@ -9,47 +9,34 @@ import * as THREE from 'three';
 import { Points, PointMaterial } from '@react-three/drei';
 
 export default function CyberGlobe() {
-  const ref = useRef<THREE.Points>(null);
-  
-  // Generate particles
-  const particles = new Float32Array(5000 * 3);
-  for(let i=0; i<5000; i++) {
-    const theta = 2 * Math.PI * Math.random();
-    const phi = Math.acos(2 * Math.random() - 1);
-    const r = 2.5; 
-    
-    // Add some random noise for "cloud" effect
-    const x = r * Math.sin(phi) * Math.cos(theta);
-    const y = r * Math.sin(phi) * Math.sin(theta);
-    const z = r * Math.cos(phi);
-    
-    particles[i*3] = x;
-    particles[i*3+1] = y;
-    particles[i*3+2] = z;
-  }
+  const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame((state, delta) => {
-    if (ref.current) {
-        ref.current.rotation.y += delta * 0.1;
+    if (meshRef.current) {
+        meshRef.current.rotation.y += delta * 0.15;
     }
   });
 
   return (
-    <group rotation={[0,0,Math.PI/6]}>
-       <Points ref={ref} positions={particles} stride={3} frustumCulled={false}>
-            <PointMaterial
-                transparent
+    <group>
+        {/* Main Wireframe Globe */}
+        <Sphere args={[2.5, 32, 32]} ref={meshRef}>
+            <meshBasicMaterial 
                 color="#06b6d4"
-                size={0.02}
-                sizeAttenuation={true}
-                depthWrite={false}
-                blending={THREE.AdditiveBlending}
+                wireframe
+                transparent
+                opacity={0.3}
             />
-       </Points>
-       {/* Core */}
-       <Sphere args={[2.4, 32, 32]}>
-             <meshBasicMaterial color="black" />
-       </Sphere>
+        </Sphere>
+        
+        {/* Inner Core Glow */}
+        <Sphere args={[2.3, 32, 32]}>
+            <meshBasicMaterial 
+                color="#06b6d4"
+                transparent
+                opacity={0.05}
+            />
+        </Sphere>
     </group>
   );
 }

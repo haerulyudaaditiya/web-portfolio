@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { portfolioData, Project } from '@/data/portfolio';
 import { ArrowUpRight, Trophy, X, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
@@ -12,6 +13,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function ProjectShowcase() {
   const { playHover, playClick } = useCyberSound();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <section id="projects" className="py-20 px-6 relative z-10">
@@ -78,84 +84,106 @@ export default function ProjectShowcase() {
           ))}
         </div>
 
-        {/* Modal Overlay */}
-        <AnimatePresence>
-            {selectedProject && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10">
-                    <motion.div 
-                        initial={{ opacity: 0 }} 
-                        animate={{ opacity: 1 }} 
-                        exit={{ opacity: 0 }}
-                        onClick={() => setSelectedProject(null)}
-                        className="absolute inset-0 bg-black/80 backdrop-blur-md"
-                    />
-                    
-                    <motion.div 
-                        layoutId={`card-${selectedProject.id}`}
-                        className="w-full max-w-4xl bg-slate-950 border border-cyan-500/30 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(6,182,212,0.15)] relative z-10 flex flex-col md:flex-row max-h-[90vh]"
-                    >
-                        {/* Close Button */}
-                        <button 
-                            onClick={(e) => { e.stopPropagation(); setSelectedProject(null); }}
-                            className="absolute top-4 right-4 z-50 p-2 bg-black/50 text-white hover:text-cyan-400 rounded-full backdrop-blur-sm transition-colors"
+        {/* Modal Overlay via Portal */}
+        {mounted && createPortal(
+            <AnimatePresence>
+                {selectedProject && (
+                    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 md:p-10 pointer-events-auto">
+                        <motion.div 
+                            initial={{ opacity: 0 }} 
+                            animate={{ opacity: 1 }} 
+                            exit={{ opacity: 0 }}
+                            onClick={() => setSelectedProject(null)}
+                            className="absolute inset-0 bg-black/90 backdrop-blur-md"
+                        />
+                        
+                        <motion.div 
+                            layoutId={`card-${selectedProject.id}`}
+                            className="w-full max-w-4xl bg-slate-950 border border-cyan-500/30 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(6,182,212,0.15)] relative z-10 flex flex-col md:flex-row max-h-[90vh]"
                         >
-                            <X size={24} />
-                        </button>
+                            {/* Close Button - Moved slightly lower for safety */}
+                            <button 
+                                onClick={(e) => { e.stopPropagation(); setSelectedProject(null); }}
+                                className="absolute top-4 right-4 z-[1000] p-2 bg-black/50 text-white hover:text-cyan-400 rounded-full backdrop-blur-sm transition-colors border border-white/10"
+                            >
+                                <X size={24} />
+                            </button>
 
-                        {/* Modal Image */}
-                        <div className="w-full md:w-1/2 h-64 md:h-auto relative">
-                             <motion.div layoutId={`image-${selectedProject.id}`} className="w-full h-full">
-                                <Image 
-                                    src={selectedProject.image} 
-                                    alt={selectedProject.title} 
-                                    fill 
-                                    className="object-cover"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent md:bg-gradient-to-r" />
-                             </motion.div>
-                        </div>
+                            {/* Modal Image */}
+                            <div className="w-full md:w-1/2 h-64 md:h-auto relative">
+                                 <motion.div layoutId={`image-${selectedProject.id}`} className="w-full h-full">
+                                    <Image 
+                                        src={selectedProject.image} 
+                                        alt={selectedProject.title} 
+                                        fill 
+                                        className="object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent md:bg-gradient-to-r" />
+                                 </motion.div>
+                            </div>
 
-                        {/* Modal Content */}
-                        <div className="w-full md:w-1/2 p-8 overflow-y-auto">
-                            <span className="text-cyan-400 text-xs font-mono uppercase tracking-wider mb-2 block">{selectedProject.type}</span>
-                            <motion.h3 layoutId={`title-${selectedProject.id}`} className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">{selectedProject.title}</motion.h3>
+                            {/* Modal Content */}
+                            <div className="w-full md:w-1/2 p-6 md:p-8 overflow-y-auto flex-1 min-h-0 bg-slate-950">
+                                <span className="text-cyan-400 text-xs font-mono uppercase tracking-wider mb-2 block">{selectedProject.type}</span>
+                                <motion.h3 layoutId={`title-${selectedProject.id}`} className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">{selectedProject.title}</motion.h3>
 
-                            <p className="text-neutral-300 text-base leading-relaxed mb-8">
-                                {selectedProject.description}
-                            </p>
+                                <p className="text-neutral-300 text-base leading-relaxed mb-8">
+                                    {selectedProject.description}
+                                </p>
 
-                            <div className="mb-8">
-                                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-white/10 pb-2">Key Results</h4>
-                                <ul className="space-y-2">
-                                    {selectedProject.results.map((result, i) => (
-                                        <li key={i} className="flex items-start gap-2 text-sm text-neutral-400">
-                                            <span className="text-cyan-500 mt-1">▹</span>
-                                            {result}
-                                        </li>
+                                <div className="mb-8">
+                                    <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-white/10 pb-2">Key Results</h4>
+                                    <ul className="space-y-2">
+                                        {selectedProject.results.map((result, i) => (
+                                            <li key={i} className="flex items-start gap-2 text-sm text-neutral-400">
+                                                <span className="text-cyan-500 mt-1">▹</span>
+                                                {result}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className="flex flex-wrap gap-2 mb-8">
+                                    {selectedProject.tech.map(t => (
+                                        <span key={t} className="px-3 py-1 rounded-full text-xs font-bold text-cyan-300 bg-cyan-950/30 border border-cyan-500/20">
+                                            {t}
+                                        </span>
                                     ))}
-                                </ul>
-                            </div>
+                                </div>
 
-                            <div className="flex flex-wrap gap-2 mb-8">
-                                {selectedProject.tech.map(t => (
-                                    <span key={t} className="px-3 py-1 rounded-full text-xs font-bold text-cyan-300 bg-cyan-950/30 border border-cyan-500/20">
-                                        {t}
-                                    </span>
-                                ))}
+                                {/* Action Buttons */}
+                                <div className="flex flex-col sm:flex-row gap-4 mt-auto">
+                                    {selectedProject.liveUrl && (
+                                        <a 
+                                            href={selectedProject.liveUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-3 px-6 rounded flex items-center justify-center gap-2 transition-transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                                        >
+                                            <span>View Live Project</span>
+                                            <ExternalLink size={18} />
+                                        </a>
+                                    )}
+                                    
+                                    {selectedProject.repoUrl && (
+                                        <a 
+                                            href={selectedProject.repoUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex-1 bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold py-3 px-6 rounded flex items-center justify-center gap-2 transition-transform hover:scale-105 active:scale-95"
+                                        >
+                                            <span>Source Code</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36.5-8 4-2.64-3.5-5.36-4.5-8-4-1 0-3 .5-3 3.5-.28 1.15-.28 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                                        </a>
+                                    )}
+                                </div>
                             </div>
-
-                            {/* Action Buttons */}
-                            <div className="flex gap-4">
-                                <button className="flex-1 bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-3 px-6 rounded flex items-center justify-center gap-2 transition-transform hover:scale-105 active:scale-95">
-                                    <span>View Live Project</span>
-                                    <ExternalLink size={18} />
-                                </button>
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
-            )}
-        </AnimatePresence>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>,
+            document.body
+        )}
       </div>
     </section>
   );

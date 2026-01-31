@@ -155,8 +155,8 @@ export default function Terminal() {
                         opacity: 1, 
                         scale: 1, 
                         y: 0,
-                        width: isMaximized ? '100vw' : '800px',
-                        height: isMaximized ? '100vh' : '600px',
+                        width: isMaximized ? '100vw' : 'min(800px, 95vw)',
+                        height: isMaximized ? '100vh' : 'min(600px, 80vh)',
                         borderRadius: isMaximized ? 0 : '0.5rem'
                     }}
                     exit={{ opacity: 0, scale: 0.8, y: 20 }}

@@ -37,7 +37,7 @@ export default function CyberReveal({ children, direction = 'left', delay = 0, c
         <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: true, margin: "0px" }}
             variants={variants}
             className={`relative ${className}`}
         >

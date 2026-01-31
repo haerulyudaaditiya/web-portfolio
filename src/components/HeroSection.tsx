@@ -110,7 +110,7 @@ export default function HeroSection() {
       </div>
 
       {/* Hero Content */}
-      <div className="z-10 text-center px-4 mix-blend-screen select-none">
+      <div className="z-10 text-center px-4 select-none relative">
         
         <CyberReveal 
             direction="left"
@@ -126,19 +126,22 @@ export default function HeroSection() {
                 </span>
             </div>
 
-            <div 
-                className="flex flex-col items-center gap-0 leading-none cursor-default py-4"
+        </CyberReveal>
+
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="flex flex-col items-center gap-0 leading-none cursor-default py-4 max-w-full"
                 onMouseEnter={playHover}
             >
-                <h1 className="text-4xl md:text-[8vw] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-cyan-100 to-cyan-900/50">
+                <h1 className="text-[10vw] md:text-[8vw] font-bold tracking-tighter text-white md:text-transparent md:bg-clip-text md:bg-gradient-to-b md:from-white md:via-cyan-100 md:to-cyan-900/50">
                     <GlitchText text="HAERUL YUDA" delay={500} />
                 </h1>
-                <h1 className="text-4xl md:text-[8vw] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-cyan-100 to-cyan-900/50 mt-2 md:mt-0">
+                <h1 className="text-[10vw] md:text-[8vw] font-bold tracking-tighter text-white md:text-transparent md:bg-clip-text md:bg-gradient-to-b md:from-white md:via-cyan-100 md:to-cyan-900/50 mt-1 md:mt-0">
                     <GlitchText text="ADITIYA" delay={1500} />
                 </h1>
-            </div>
-            
-        </CyberReveal>
+            </motion.div>
 
         <motion.div 
             initial={{ opacity: 0 }}
