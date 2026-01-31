@@ -59,13 +59,13 @@ export default function SystemBoot() {
         const t = setTimeout(() => {
           setLines(p => [...p, line]);
           playClick();
-          window.scrollTo(0, document.body.scrollHeight);
         }, delay);
         timeouts.push(t);
       });
 
       // Exit sequence matches log end
       const exitTimeout = setTimeout(() => {
+        window.scrollTo(0, 0); // Reset scroll to top before revealing page
         setStage('turning_off');
       }, delay + 1000); // Read time for last line
       timeouts.push(exitTimeout);

@@ -192,7 +192,7 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2, duration: 1 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+            className="mt-16 z-20 flex flex-col items-center gap-2"
         >
             <span className="text-[10px] font-mono text-cyan-500/50 uppercase tracking-[0.2em] animate-pulse">Scroll</span>
             <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500/0 via-cyan-500 to-cyan-500/0 relative overflow-hidden">
