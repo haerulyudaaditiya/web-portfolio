@@ -80,12 +80,12 @@ export const portfolioData: PortfolioData = {
     title: 'Software Engineer',
     university: 'Universitas Buana Perjuangan Karawang',
     semester: 5,
-    gpa: 3.78,
+    gpa: 3.84,
     bio: 'Results-oriented Software Developer and Computer Science student seeking a Web Developer position to apply expertise in Full-Stack Development. Proven track record in building scalable web applications (HRIS & Gamification) and optimizing corporate internal systems. Proficient in PHP (CodeIgniter/Laravel), React.js, and SQL Server to create efficient, user-centered digital solutions.',
     location: 'Karawang, West Java',
     email: 'haerulyudaaditiya@gmail.com',
     phone: '+62 881 6147 969',
-    summary: 'Software Developer yang berorientasi pada hasil dan Mahasiswa Informatika yang mencari posisi Web Developer untuk menerapkan keahlian dalam Full-Stack Development. Memiliki rekam jejak sukses dalam membangun aplikasi web yang skalabel (HRIS & Gamifikasi), serta mengoptimalkan sistem internal perusahaan.',
+    summary: 'Results-oriented Software Developer and Informatics student seeking a Web Developer position to apply expertise in Full-Stack Development. Proven track record in building scalable web applications (HRIS & Gamification) and optimizing corporate internal systems. Proficient in PHP (CodeIgniter/Laravel), React.js, and SQL Server to create efficient, user-centered digital solutions.',
     social: {
       github: 'https://github.com/haerulyudaaditiya',
       linkedin: 'https://linkedin.com/in/haerul-yuda-aditiya',
@@ -161,9 +161,9 @@ export const portfolioData: PortfolioData = {
       company: 'PT Century Batteries Indonesia',
       duration: 'Sep 2025 - Present',
       description: [
-        'Develop custom features for internal web applications using PHP CodeIgniter',
-        'Manage Microsoft SQL Server database integrity',
-        'Resolve critical frontend and backend bugs'
+        'Spearheaded the development of custom features for internal web applications using PHP CodeIgniter, accelerating departmental workflows and reducing manual data entry.',
+        'Managed Microsoft SQL Server database integrity, ensuring daily operational data accuracy.',
+        'Resolved critical frontend and backend bugs, significantly improving application stability and user satisfaction.'
       ],
       achievements: [
         'Accelerated department workflow by 40%',
@@ -178,9 +178,9 @@ export const portfolioData: PortfolioData = {
       company: 'PT Idarma Digital Technology',
       duration: 'Mar 2025 - Jun 2025',
       description: [
-        'Convert design mockups into high-performance web interfaces',
-        'Coordinate feature implementation with cross-functional teams',
-        'Optimize application styling using utility-first CSS'
+        'Transformed design mockups into high-performance web interfaces, achieving optimal compatibility across desktop and mobile devices.',
+        'Coordinated feature implementation with cross-functional teams in Agile sprints, ensuring strict adherence to design specifications.',
+        'Optimized application styling using utility-first CSS, contributing to a responsive and consistent user experience.'
       ],
       achievements: [
         'Achieved optimal compatibility across desktop and mobile',
@@ -195,9 +195,9 @@ export const portfolioData: PortfolioData = {
       company: 'Meiji Food Indonesia',
       duration: 'Dec 2023 - Jun 2024',
       description: [
-        'Operate packing machinery to achieve daily production targets',
-        'Conduct visual inspections and quality testing',
-        'Implement Good Manufacturing Practices (GMP)'
+        'Operated packaging machinery to achieve daily production targets while strictly adhering to corporate quality standards.',
+        'Conducted regular visual inspections and quality testing to minimize defect rates in the final product.',
+        'Disciplined implementation of Good Manufacturing Practices (GMP) to maintain workplace cleanliness, orderliness, and safety.'
       ],
       achievements: [
         'Maintained strict quality standards',
@@ -205,6 +205,23 @@ export const portfolioData: PortfolioData = {
         'Ensured workplace cleanliness and safety'
       ],
       tech: ['GMP', 'Quality Control', 'Production Management']
+    },
+    {
+      id: 'peruri-operator',
+      role: 'Warehouse Operator',
+      company: 'Peruri',
+      duration: 'Jul 2022 - Dec 2022',
+      description: [
+        'Executed efficient goods reception, storage, and dispatch processes to ensure smooth logistical distribution flows.',
+        'Ensured stock data accuracy through routine inventory audits and meticulous warehouse administration.',
+        'Operated warehouse equipment in compliance with OHS (Occupational Health & Safety) procedures to minimize operational risks.'
+      ],
+      achievements: [
+        'Ensured stock data accuracy',
+        'Efficient logistics distribution',
+        'Zero safety incidents'
+      ],
+      tech: ['Warehouse Management', 'Inventory Control', 'K3']
     }
   ],
   certificates: [
