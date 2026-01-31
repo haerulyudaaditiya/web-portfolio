@@ -4,6 +4,7 @@ import { portfolioData } from '@/data/portfolio';
 import SpotlightCard from '@/components/ui/SpotlightCard';
 import SectionHeading from '@/components/ui/SectionHeading';
 import useCyberSound from '@/hooks/useCyberSound';
+import CyberShapes from './CyberShapes';
 
 export default function SkillsShowcase() {
   const { playHover } = useCyberSound();
@@ -12,8 +13,9 @@ export default function SkillsShowcase() {
   const categories = Array.from(new Set(portfolioData.skills.map(s => s.category)));
 
   return (
-    <section id="skills" className="py-20 px-6 relative z-10">
-      <div className="container mx-auto">
+    <section id="skills" className="py-20 px-6 relative z-10 overflow-hidden">
+      <CyberShapes />
+      <div className="container mx-auto relative z-10">
         <SectionHeading title="SYSTEM CAPABILITIES" subtitle="Technical Arsenal" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
