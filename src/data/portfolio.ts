@@ -9,7 +9,7 @@ export interface Project {
   liveUrl?: string;
   repoUrl?: string;
   highlight?: string;
-  type: 'Web' | 'Mobile' | 'Full Stack' | 'HRIS' | 'Gamification';
+  type: 'Web' | 'Mobile' | 'Full Stack' | 'HRIS' | 'Gamification' | 'AI' | 'Desktop';
   results: string[];
 }
 
@@ -26,7 +26,7 @@ export interface Experience {
 export interface Skill {
   name: string;
   level: number; // 1-10
-  category: 'Frontend' | 'Backend' | 'Mobile' | 'DevOps' | 'Database' | 'Soft Skills';
+  category: 'Frontend' | 'Backend' | 'Mobile' | 'DevOps' | 'Database' | 'Soft Skills' | 'AI/ML';
   years: number;
 }
 
@@ -106,21 +106,141 @@ export const portfolioData: PortfolioData = {
     { name: 'Git & CI/CD', level: 8, category: 'DevOps', years: 2 },
     { name: 'Problem Solving', level: 10, category: 'Soft Skills', years: 4 },
     { name: 'Team Collaboration', level: 9, category: 'Soft Skills', years: 4 },
+    { name: 'Python', level: 8, category: 'Backend', years: 2 },
+    { name: 'Computer Vision', level: 8, category: 'AI/ML', years: 1 },
+    { name: 'FilamentPHP', level: 9, category: 'Backend', years: 1 },
+    { name: 'Supabase', level: 8, category: 'Database', years: 1 },
+    { name: 'PostgreSQL', level: 8, category: 'Database', years: 1 },
   ],
   projects: [
+    {
+      id: 'simpligudang-erp',
+      title: 'SimpliGudang - Enterprise Asset ERP',
+      description: 'A comprehensive Enterprise Resource Planning (ERP) solution for Asset Management designed for multi-tenant environments. It integrates Procurement workflows with Asset Lifecycle Management, featuring automatic Total Cost of Ownership (TCO) calculation, preventive maintenance scheduling, and official document generation (BAST).',
+      tech: ['Laravel', 'FilamentPHP', 'Livewire', 'MySQL', 'DomPDF', 'Chart.js'],
+      image: '/images/simpli-gudang.png',
+      type: 'Full Stack',
+      repoUrl: 'https://github.com/haerulyudaaditiya/simpligudang',
+      results: [
+        'End-to-End Procurement: Integrated Purchase Orders with automatic Goods Receipt logic',
+        'Financial Analytics: Real-time TCO calculation & Maintenance Cost tracking',
+        'Corporate Compliance: Auto-generated PDF Legal Documents (BAST) & Digital Asset Labeling (QR)'
+      ]
+    },
+    {
+      id: 'opencv-face-recognition',
+      title: 'Face Detection & Recognition (OpenCV)',
+      description: 'Computer Vision project capable of detecting and recognizing faces in real-time. Utilizes Haar Cascade Classifiers for detection and LBPH (Local Binary Patterns Histograms) algorithm for accurate face recognition, implemented via Jupyter Notebooks.',
+      tech: ['Python', 'OpenCV', 'Haar Cascade', 'LBPH', 'Jupyter'],
+      image: '/images/face-detection.png',
+      type: 'AI',
+      repoUrl: 'https://github.com/haerulyudaaditiya/OpenCV-Face-Recognition',
+      results: [
+        'Real-time face detection/recognition from video stream',
+        'Custom dataset training workflow',
+        'High-accuracy identification using LBPH algorithm'
+      ]
+    },
+    {
+      id: 'handwritten-digit',
+      title: 'Handwritten Digit Recognition (CNN)',
+      description: 'Real-time desktop application for recognizing handwritten digits. Powered by a Convolutional Neural Network (CNN) trained on the MNIST dataset, featuring an interactive drawing canvas with instant prediction confidence scores.',
+      tech: ['Python', 'TensorFlow', 'Keras', 'Tkinter', 'OpenCV'],
+      image: '/images/handwritten.png',
+      type: 'AI',
+      repoUrl: 'https://github.com/haerulyudaaditiya/Handwritten-Digit-Recognition',
+      results: [
+        '99% Accuracy on MNIST test set using Custom CNN',
+        'Real-time interactive drawing & prediction interface',
+        'Automated image preprocessing pipeline (Grayscale/Threshold)'
+      ]
+    },
+    {
+      id: 'idarma-profile',
+      title: 'Idarma Digital Technology - Company Profile',
+      description: 'Corporate profile website designed for branding and information dissemination. Built with Laravel to ensure performance and security, featuring a custom CMS for easy content management and role-based access control.',
+      tech: ['Laravel', 'PHP', 'Bootstrap', 'MySQL'],
+      image: '/images/idarma.png',
+      type: 'Web',
+      repoUrl: 'https://github.com/haerulyudaaditiya/idarma_profile',
+      results: [
+        'Professional corporate branding presence',
+        'Responsive UI with Bootstrap',
+        'Secure Role-Based Access Control (RBAC)'
+      ]
+    },
+    {
+      id: 'snapchef-ai',
+      title: 'SnapChef AI - Culinary Assistant',
+      description: 'An AI-powered culinary assistant that generates cooking ideas from ingredients. Leveraging Google Gemini Multimodal AI, it analyzes food images to provide personalized, healthy, and easy-to-follow recipes based on dietary preferences and available ingredients.',
+      tech: ['Python', 'Streamlit', 'Google Gemini AI', 'Computer Vision', 'Pillow'],
+      image: '/images/snapchef.png',
+      type: 'AI',
+      liveUrl: 'https://snapchef-ai.streamlit.app/',
+      repoUrl: 'https://github.com/haerulyudaaditiya/snapchef-ai',
+      results: [
+        'Visual ingredient analysis using Google Gemini Computer Vision',
+        'Personalized recipe generation (Vegan, Keto, etc.)',
+        'Automated nutritional estimation',
+      ]
+    },
+    {
+      id: 'karawang-mart',
+      title: 'KarawangMart - Hyperlocal Marketplace',
+      description: 'A modern, hyperlocal marketplace platform bridging the gap between local MSMEs (UMKM) and customers. Engineered with a robust multi-role architecture, it features a real-time order tracking system, a comprehensive "Digital Kitchen" dashboard for merchants to manage products & orders, and precise geolocation-based store discovery.',
+      tech: ['React.js', 'Supabase', 'Tailwind CSS', 'Framer Motion', 'Leaflet Maps', 'PostgreSQL'],
+      image: '/images/karawangmart.png',
+      type: 'Full Stack',
+      liveUrl: 'https://karawangmart.netlify.app/',
+      repoUrl: 'https://github.com/haerulyudaaditiya/direktori-umkm-web-in-action',
+      results: [
+        'End-to-end Realtime Order Flow (User to Merchant) via WebSockets',
+        'Secure Multi-Tenant Architecture with Row Level Security (RLS)',
+        'Advanced Merchant Tools: GPS Pinning, Product CRUD, & Live Order Handling'
+      ]
+    },
+    {
+      id: 'musma-voting',
+      title: 'MUSMA HIMATIF 2025 E-Voting',
+      description: 'Secure, real-time E-Voting platform designed for high-stakes student council elections. Features strict QR-based attendance verification with time-gating logic, instant vote tallying via Supabase Realtime, and a comprehensive admin dashboard for participant management.',
+      tech: ['React.js', 'Supabase', 'Tailwind CSS', 'PostgreSQL', 'Real-time API'],
+      image: '/images/musma.png',
+      type: 'Full Stack',
+      liveUrl: 'https://musmahimatif.netlify.app/',
+      repoUrl: 'https://github.com/haerulyudaaditiya/musma-himatif-2025',
+      results: [
+        'Guaranteed 100% unique votes via QR-gated access',
+        'Real-time Quick Count with zero latency',
+        'Secure admin panel with manual & QR time-validation'
+      ]
+    },
+    {
+      id: 'mymoney-finance',
+      title: 'MyMoney - Family Finance',
+      description: 'Comprehensive family finance platform empowering parents to monitor children\'s spending while providing students with tools for personal budget tracking, savings goals, and multi-currency transaction management.',
+      tech: ['PHP Native', 'MySQL', 'Bootstrap 5', 'Chart.js', 'DataTables'],
+      image: '/images/mymoney.png',
+      type: 'Full Stack',
+      liveUrl: 'https://mymoney.luno.my.id/',
+      results: [
+        'Centralized family financial monitoring',
+        'Multi-currency support with auto-conversion',
+        'Visual expense analysis & goal tracking'
+      ]
+    },
     {
       id: 'sipena-hris',
       title: 'SIPENA HRIS System',
       description: 'Comprehensive HR Management System with geofencing-based attendance, leave management, and employee performance tracking. Modern solution for enterprise workforce management.',
       tech: ['Laravel', 'Ionic', 'Angular', 'Geofencing', 'MySQL', 'REST API'],
       image: '/images/sipena.jpg',
-      highlight: '2nd Place Expo Technovision 2024',
+      highlight: '2nd Place - EXPO TECHNOVISION 2025',
       type: 'HRIS',
-      repoUrl: 'https://github.com/haerulyudaaditiya/sipena-hris',
+      repoUrl: 'https://github.com/haerulyudaaditiya/sipena-ionic-app',
       results: [
-        'Reduced manual HR processes by 80%',
-        'Improved attendance accuracy by 95%',
-        'Scalable to 1000+ employees'
+        '2nd Place Winner at EXPO MAHASISWA - TECHNOVISION 2025 (UBP Karawang)',
+        'Advanced Geofencing implementation for verified onsite attendance',
+        'Integrated Payroll & Performance Management Module'
       ]
     },
     {
@@ -129,14 +249,14 @@ export const portfolioData: PortfolioData = {
       description: 'Interactive Sundanese script learning platform combining gamification with cultural education.',
       tech: ['Vue.js', 'Laravel', 'Gamification', 'WebSockets', 'MySQL'],
       image: '/images/aksaraquest.jpg',
-      highlight: '1st Place National Media Competition',
+      highlight: '1st Place Web Dev - INSYFEST 2025',
       type: 'Gamification',
-      liveUrl: 'https://aksaraquest.com',
+      liveUrl: 'https://aksaraquest.newhimatif.com/',
       repoUrl: 'https://github.com/haerulyudaaditiya/aksaraquest',
       results: [
-        'Increased student engagement by 300%',
-        'Winner of national innovation competition',
-        'Adopted by 5 educational institutions'
+        'Champion of INSYFEST 2025 Web Development Competition (UBP Karawang)',
+        'Innovative gamification platform for preserving Sundanese culture',
+        'Recognized for technical excellence in Full-Stack implementation'
       ]
     },
     {
@@ -145,12 +265,12 @@ export const portfolioData: PortfolioData = {
       description: 'Complete vehicle rental booking system with real-time availability, payment processing, and fleet management dashboard.',
       tech: ['PHP', 'Laravel', 'Bootstrap', 'MySQL', 'Payment Gateway'],
       image: '/images/wejea.png',
-      type: 'Web',
-      liveUrl: 'https://wejeatrans.com',
+      type: 'Full Stack',
+      repoUrl: 'https://github.com/haerulyudaaditiya/final_project',
       results: [
-        'Increased bookings by 150%',
-        'Reduced manual work by 70%',
-        '24/7 automated operations'
+        'Successfully digitalized manual rental validation processes',
+        'Implemented real-world client requirements for Final Year Project',
+        'Automated penalty calculation & fleet availability management'
       ]
     }
   ],
