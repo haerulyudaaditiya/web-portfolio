@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { portfolioData } from '@/data/portfolio';
 import { Award, ExternalLink, Search, Filter } from 'lucide-react';
 import { useState } from 'react';
-import SpotlightCard from './SpotlightCard';
+import SpotlightCard from '@/components/ui/SpotlightCard';
 import Image from 'next/image';
 
 export default function CertificateShowcase() {
